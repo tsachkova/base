@@ -756,3 +756,166 @@ function FibonachiRecurs(){
 
 // let b = fibonachi();
 // console.log(b.next())
+
+let range = {
+    to: 9,
+    res: 0,
+    prv: 1,
+    nxt: 1,
+    [Symbol.iterator]() {
+        return this;
+    },
+    next() {
+        // if (this.prv === undefined){
+        //
+        // }
+
+        if (this.prv <= this.to) {
+            this.res = this.prv + this.nxt;
+            this.prv = this.nxt;
+            this.nxt = this.res;
+            return {
+                done: false,
+                value: this.res
+            };
+        } else {
+            this.prv = 1
+            this.nxt = 1
+
+            return {
+                done: true
+            };
+        }
+    }
+
+};
+
+//////////////////////////////////////////////////////////////
+let range2 = {
+    num: 8
+}
+
+range2[Symbol.iterator] = function() {
+
+    let prev = 1;
+    let next = 1;
+    let num = this.num
+    let res
+
+    return {
+        next() {
+            if (prev <= num) {
+                res = prev + next;
+                prev = next;
+                next = res;
+
+                return {
+                    done: false,
+                    value: res
+                };
+            } else {
+                return {
+                    done: true
+                };
+            }
+        }
+
+    }
+};
+///////////////////////////////////////////////////////////////////////////////////
+
+// range.nxt = 8
+// let n = 0;
+// for (let num of range) {
+//     console.log(num);
+//
+//     if (n++ > 30)
+//         break;
+// }
+
+function* fib(){
+    let prev;
+    let next;
+    let res;
+
+    if (prev === undefined){
+        prev = 0
+        next = 1
+    }
+
+    while (true){
+        res = prev + next;
+        prev = next;
+        next = res;
+
+        yield res
+    }
+}
+
+// let fb = fib();
+//
+// let n = 0;
+// console.log(fb.next().value);
+// console.log(fb.next().value);
+// console.log(fb.next().value);
+// console.log(fb.next().value);
+// console.log(fb.next().value);
+// console.log(fb.next().value);
+// for (let num of fb) {
+//     console.log(num);
+//
+//     if (n++ > 9)
+//         break;
+// }
+
+
+function* tlGenerator(){
+    while (true)
+    {
+        yield 'red'
+        yield 'yellow'
+        yield 'green'
+        yield 'yellow'
+    }
+}
+
+let t = tlGenerator();
+
+// setInterval(
+//     function (){
+//         console.log(t.next().value);
+//     },
+//     5000
+// );
+
+
+let tlIterator = {
+    num: 0,
+    colors: [
+        'red',
+        'yellow',
+        'green',
+        'yellow',
+    ],
+    [Symbol.iterator]() {
+        return this;
+    },
+    next() {
+            if (this.num > 3)
+                this.num = 0;
+
+            return {
+                done: false,
+                value: this.colors[this.num++]
+            };
+
+    }
+}
+
+let n = 0;
+for (let num of tlIterator) {
+    console.log(num);
+
+    if (n++ > 30)
+        break;
+}
