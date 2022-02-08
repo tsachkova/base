@@ -1,4 +1,7 @@
 function isAnagramm (str1, str2) { 
+    if(( typeof str1 !== 'string' ) || (typeof str2 !== 'string')) {
+        throw new Error("Error arguments type")
+    }
     if( str1.length !== str2.length ) {
         return false;
     }
@@ -7,7 +10,10 @@ function isAnagramm (str1, str2) {
         for(let i = 0; i < str1.length; i++) {
             if(str2.indexOf([str1[i]]) !== -1) {
                 string = string + str1[i];
+                str2 = str2.replace(str1[i], '')
+
             }
+            
         }   
         if(str1 === string) {
             return true;
@@ -18,6 +24,9 @@ function isAnagramm (str1, str2) {
 
 
 function digitInNamber (number, n) {
+    if(typeof number !== "number"){
+        throw new Error("Error arguments type")
+    }
     n = n||1;
     if(number/Math.pow(10,n)<1) {
         console.log(n)
@@ -584,20 +593,166 @@ function amountOfElements(numb) {
 //     return dex
 // }
 
-function toInvertBit(numb) {
-    let binaryBacward = '';
-    let oneBit = 1;
-    for(let i = 0; i < 32; i++) {
-        if(oneBit & numb) {
-            binaryBacward = binaryBacward + '0'
-        } else { 
-            binaryBacward = binaryBacward + '1'
-        }
-    oneBit = oneBit << 1 ;
-    }
-    let binary = '';
-    for(let i = binaryBacward.length - 1; i >= 0; i--){
-        binary = binary + binaryBacward.charAt(i);
-    }
-    return console.log(binary)
+// function toInvertBit(numb) {
+//     let binaryBacward = '';
+//     let oneBit = 1;
+//     for(let i = 0; i < 32; i++) {
+//         if(oneBit & numb) {
+//             binaryBacward = binaryBacward + '0'
+//         } else { 
+//             binaryBacward = binaryBacward + '1'
+//         }
+//     oneBit = oneBit << 1 ;
+//     }
+//     let binary = '';
+//     for(let i = binaryBacward.length - 1; i >= 0; i--){
+//         binary = binary + binaryBacward.charAt(i);
+//     }
+//     return console.log(binary)
+// }
+
+//
+//  
+
+
+
+// function Counter(...args) {
+//     for(let item in args) {
+//         this[item] = args[item];
+//     }
+//     this.length = args.length;
+// }
+
+// Counter.prototype[Symbol.iterator] = function() {
+//     return {
+//         self: this,
+//         index: 0,
+//         next() {
+//             if(this.index < this.self.length) {
+//                 return {
+//                     value: this.self[this.index++],
+//                     done: false,
+//                 };
+//             }
+
+//             return {
+//                 value: undefined,
+//                 done: true,
+//             };
+//         },
+//     };
+// };
+
+// let counter = new Counter(1,2,3,4,5,6,7,8,9,10);
+// let sum = 0;
+// for(let item of counter) {
+//     sum += item;
+// }
+// console.log(sum);
+
+//let it = counter[Symbol.iterator]();
+
+
+
+// let obj = {  index: 100,
+//             [Symbol.iteration]:function(){
+//                                      let j = 1;
+//                                      let prev = 1;
+//                                      let new1 = 1;
+//                                      function next() {
+//                                          if(j++ < 100) {
+//                                             [prew, new1] = [new1, (new1 + prev)||1];
+//                                             return {prev, done:false}
+//                                          }
+//                                          else {
+//                                              return {done:true}
+//                                         }
+//                                     }
+//              }
+//         }
+   
+        
+//         for(let num of obj){console.log(prev)}
+//                                     return { 
+//                                         prew : 0,
+//                                         start : 1,
+//                                         new : 0,
+//                                         next(){
+//                                                  if(this.index < 1000){
+//                                                 this.new = this.start + this.prev;
+//                                                 this.start = this.prev;
+//                                                 this.prew = this.new;
+function FibonachiRecurs(){
+    let numbPrev = 1;
+    let numbNext = 1;
+     
+
 }
+    //                                      let j = 1;
+    //                                      let prev = 1;
+    //                                      let new1 = 1;
+    //                                      function next() {
+    //                                          if(j++ < 100) {
+    //                                             [prew, new1] = [new1, (new1 + prev)||1];
+    //                                             return {prev, done:false}
+    //                                          }
+    //                                          else {
+    //                                              return {done:true}
+    //                                         }
+    //                                     }
+    //              }
+    //         }
+       
+            
+    //         for(let num of obj){console.log(prev)}
+//                                                 return {value: this.new, done:false}}
+//                                                 return {done:true}
+
+//                                                 }
+
+//                                         }
+// }}
+
+// for (let value of obj) {let obj = {[Symbol.iteration]:function(){
+//     let index = 0;
+//         return { 
+//             prew : 0,
+//             start : 1,
+//             new : 0,
+//             next(){
+//                      if(this.index < 1000){
+//                     this.new = this.start + this.prev;
+//                     this.start = this.prev;
+//                     this.prew = this.new;
+
+//                     return {value: this.new, done:false}}
+//                     return {done:true}
+
+//                     }
+
+//             }
+// }}
+
+// for (let value of obj) {
+// console.log(value);
+
+// if (counter++ > 1000) { // let's make sure we get out!
+// break;
+// }
+
+
+// function* fibonachi(){
+//     let next = 1;
+//     let second = 1;
+//     if(true){
+//        value = second;
+//        second = next;
+//        next = second + value;
+       
+//         }
+//     }
+
+
+
+// let b = fibonachi();
+// console.log(b.next())
