@@ -1,895 +1,952 @@
-function isAnagramm (str1, str2) { 
-    if(( typeof str1 !== 'string' ) || (typeof str2 !== 'string')) {
+
+// Написать функцию которая проверяет являются две строки анаграммой или нет
+
+function isAnagramm(str1, str2) {
+    if ((typeof str1 !== 'string') || (typeof str2 !== 'string')) {
         throw new Error("Error arguments type")
     }
-    if( str1.length !== str2.length ) {
+    if (str1.length !== str2.length) {
         return false;
     }
-    else { 
-        let string = '';
-        for(let i = 0; i < str1.length; i++) {
-            if(str2.indexOf([str1[i]]) !== -1) {
-                string = string + str1[i];
+    else {
+        for (let i = 0; i < str1.length; i++) {
+            if (str2.indexOf([str1[i]]) !== -1) {
                 str2 = str2.replace(str1[i], '')
-
             }
-            
-        }   
-        if(str1 === string) {
+        }
+        if (str2 === '') {
             return true;
         }
-        else {return false}  
+        return false;
     }
 }
 
+// Написать функцию которая вычисляет подсчет количество цифр в числе. Реализовать с помощью рекурсии.
 
-function digitInNamber (number, n) {
-    if(typeof number !== "number"){
+function digitInNamber(number, n) {
+    if (typeof number !== "number") {
         throw new Error("Error arguments type")
     }
-    n = n||1;
-    if(number/Math.pow(10,n)<1) {
-        console.log(n)
+    number = Math.abs(number);
+    n = n || 1;
+    if (number / Math.pow(10, n) < 1) {
+        return (n);
     } else {
-        digitInNamber (number, n+1 )
+        return digitInNamber(number, n + 1);
     }
 }
 
-function palindrom (string) {
-    let onlyLeter = '';
-    for(let i = 0; i < string.length; i++) {
-        if((string[i] !== '!' ) &&  (string[i] !== ' ') && (string[i] !== '-') && ((string[i] !== '?'))) {
-            onlyLeter = onlyLeter + string[i]
-        }
-    }
-    onlyLeter = onlyLeter.toLowerCase()
-    let result = 'палиндром';
-        for (let i = 0; i < onlyLeter.length; i++) {
-            let lastLetter = onlyLeter.length -1;
-            if(onlyLeter[i] !== onlyLeter[(lastLetter - i)]) {
-                result = 'не палиндром'
-            }
-        }
-    
-    return (result)
-
-}
-
-
-function Rectangle (sideA, sideB) {
-    this.sideA = sideA;
-    this.sideB = sideB;
-    this.squareRectangle = function() {
-        return ("square rectangle = " + this.sideB * this.sideA)
-    };
-    this.perimetrRectangle = function() {
-        return ("square rectangle = " + (2 * (this.sideA + this.sideB))) 
-    }
-}
-
-calcRectangle = new Rectangle( 5, 6);
-console.log(calcRectangle.squareRectangle());
-console.log(calcRectangle.perimetrRectangle())
-
-function Triang (sideA, sideB, sideC) {
-    this.sideA = sideA;
-    this.sideB = sideB;
-    this.sideC = sideC;
-    this.squareTriang = function() {
-        let halfPer = (this.sideA + this.sideB + this.sideC) /2
-        return ("square triangle = " + 
-        Math.sqrt(halfPer * (halfPer - this.sideA) * (halfPer - this.sideB) * (halfPer - this.sideC)))
-    };
-    this.perimetrTriang = function() {
-        return ("perimetr triangle = " + (this.sideC + this.sideA + this.sideB)) 
-    }
-}
-
-calcRectangle = new Triang( 5, 6, 7);
-console.log(calcRectangle.squareTriang());
-console.log(calcRectangle.perimetrTriang())
-
-function Circle ( radius ) {
-    this.radius = radius;
-    this. squareCircle = function() {
-        return ('square circle = ' + (Math.PI * this.radius * this.radius))
-    };
-    this.perimetrCircle = function() {
-        return ('square circle = ' + (Math.PI * 2 * this.radius))
-    }
-}
-
-calcRectangle = new Circle( 5 );
-console.log(calcRectangle.squareCircle());
-console.log(calcRectangle.perimetrCircle());
-
-
-
-
-let factorial = function (number, n) {
-    n = n || number;
-    n = n * (number - 1);
-    console.log( n );
-    if (number - 1 === 2) {
-        console.log(n);
-        return n;
-    } else {
-        return factorial ((number - 1), n )
-    }
-}
-
-let memoiz = function () {
-    let cash = {};
-    return function (number){
-        if(number in cash) {
-            console.log('memo')
-            return cash[number];
-        } else { 
-            console.log('calc');
-            let rezult = factorial(number);
-            cash[number] = rezult;
-            console.log(cash)
-        return rezult
-        } 
-    } 
-}
-
-let memoFactorial = memoiz();
-
-
-let arr = [1, -1, 2, 3, 6, 5];
-let sumAllFunc = function(sum, item){
-                    return (sum + item)
-                }
-
-let sumEvenFunc = function(sum, item,){
-                    if (item%2 === 0) {
-                        return (sum + item)
-                    } else {
-                        return sum
-                    }
-                 }     
-    
-let sumMultOfThreeFunc = function(sum, item,){
-                        if (item%3 === 0) {
-                            return (sum + item)
-                        } else {
-                            return sum
-                        }
-                    }
-
-
-let sumOddPositivFunc =     function(sum, item,){
-                            if ((item%2 !== 0)&&(item >0)) {
-                                return (sum + item)
-                            } else {
-                                return sum
-                            }
-                        }
-
- let sumAll = arr.reduce(sumAllFunc, 0)
- 
- let sumEven = arr.reduce(sumEvenFunc, 0)
-
- let sumMultOfThree = arr.reduce(sumMultOfThreeFunc, 0)
-
- let sumOddPositiv = arr.reduce(sumOddPositivFunc, 0)
-
-   
-function sumRecurs(arr, sum, i) {
-    sum = sum||0;
-    i = i||0;
-    sum = sum + arr[i];
-       if(arr.length  < i+2) {
-       return console.log(sum)
-    } else {
-        return sumRecurs(arr, sum, i+1)
-    }
-}
-
-sumRecurs(arr);
-
-function amountOfElements(arr) {
-    let nullNumb = 0;
-    let negativNumb = 0;
-    let positivNumb = 0;
-    let primeNumb = 0;
-    for(let i = 0; i < arr.length; i++){
-        if(arr[i] < 0) {
-            negativNumb+= 1;
-        } else if (arr[i] > 0) {positivNumb+=1
-        } else {nullNumb+=1};
-        let flag = false;
-        if(arr[i] > 0){
-            for(let m = 2; m < arr[i]; m++){
-                if((arr[i]%m === 0)){
-                flag = true;
-            } 
-            }if(flag === false){primeNumb+=1}
-        } 
-        
-    }
-    return  {nullNumb,  negativNumb,  positivNumb, primeNumb} 
-}
-
-
-
-function SumMinToMax(min, max, sum) {
-    min = min + 1;
-    sum = sum || 0;
-    sum = sum + min;
-    if (min + 1 < max) {
-        return SumMinToMax(min, max, sum)
-    } else {
-        return console.log(sum)
-    }
-}
-
-function SumMinToMaxMultThree(min, max, sum) {
-    min = min + 1;
-    sum = sum || 0;
-    if (min%3 === 0) {
-        sum = sum + min;
-    }
-    if (min + 1 < max) {
-       return SumMinToMaxMultThree(min, max, sum)
-    } else {
-        return console.log(sum)
-    }
-}
-
-function SumMinToMaxPositiv(min, max, sum) {
-    min = min + 1;
-    sum = sum || 0;
-    if (min > 0) {
-        sum = sum + min;
-    }
-    if (min + 1 < max) {
-       return SumMinToMaxPositiv(min, max, sum)
-    } else {
-        return console.log(sum)
-    }
-}
-
-function SumMinToMaxСycle(min, max) {
-    let sum = 0;
-    for (let i = min + 1; i < max; i++) {
-        sum = sum + i
-    }
-    return console.log(sum)
-}
-
-
-
-let multyArray = [[1, 2, 3, 4, 5, 6 ],
-                 [5, 6, 7, 8, 6, 6 ], 
-                 [9, 10, 11, 12, 12, 12],
-                 [9, 10, 11, 12, 12, 12]];
-
-function TransponMatrix(matrix) {
-    let newMatrix = [];
-    for (let j = 0; j < matrix.length; j++) {
-        let matrixRow = matrix[j];
-        console.log(matrixRow)
-        for (let i = 0; i < matrixRow.length; i++ ) {
-            if (newMatrix.length < i +1) {
-                newMatrix.push([])
-            }
-            newMatrix[i][j] = matrixRow[i];
-                  }
-    }
-    return console.log (newMatrix)
-}
-
-mx1 = [[1,2,1],
-       [2,1,2]];
-
-mx2 = [[2,1,2],
-       [1,2,1]]
-
-function sumMatrix( matrix1, matrix2) {
-    let sumMatr = [];
-    for(let i = 0; i < matrix1.length; i++) {
-        sumMatr.push([]);
-        let matrixRow1 = matrix1[i];
-        let matrixRow2 = matrix2[i];
-        for(let j = 0; j < matrixRow1.length; j++) {
-            sumMatr[i][j] = matrixRow1[j] + matrixRow2[j]
-        }
-    }
-    return console.log(sumMatr)
-}
-
-multyArray = [[1, 2, 3, 4, 5, 6 ],
-              [5, 6, 7, 8, 0, 6 ], 
-              [9, 10, 11, 12, 12, 12],
-              [9, 0, 11, 12, 12, 12]];
-
-function deleteStrngWithNull(arr, j) {
-    j = j||0
-    let arrString = arr[j];
-    let flag = false;
-    for( let i = 0; i < arrString.length; i++ ) {
-        if(arrString[i] === 0) {
-            flag = true;
-        }
-    }
-    if(flag === true) {
-        arr.splice(j, 1);
-        --j;
-        console.log(arr)
-    }
-    if(j+1 < arr.length){
-        return deleteStrngWithNull(arr, j + 1)
-    } else {return console.log(arr)}
-}
-
-function deleteСolumnWithNull(arr, j) {
-    j = j||0
-    let arrString = arr[j];
-    for( let i = 0; i < arrString.length; i++ ) {
-        if(arrString[i] === 0) {
-            for(let m = 0; m < arr.length; m++) {
-                arr[m].splice(i, 1)
-            }
-        }
-    }
-    if(j+1 < arr.length){
-        return deleteСolumnWithNull(arr, j + 1)
-    } else {return console.log(arr)}
-}
-
-multyArray = [[1, 2, 3, 4 ],
-              [5, 6, 7, 8], 
-              [9, 10, 11, 12],
-              [9, 0, 11, 12]];
-
-function underDiagonalMatrixSum(matrix) {
-    let sum = 0;
-    console.log(matrix)
-    for (let i = 1; i < matrix.length; i++) {
-        matrixString = matrix[i];
-        console.log(matrixString)
-        for(let m = 0; m < i; m++) {
-            console.log(matrixString[m])
-            sum = sum + matrixString[m]
-        }
-    }
-    return console.log(sum)
-}
-
-function underDiagonalMatrix(matrix) {
-    let sum = 0;
-    let nullElement = 0;
-    let count = 0;
-    console.log(matrix)
-    for (let i = 1; i < matrix.length; i++) {
-        matrixString = matrix[i];
-        console.log(matrixString)
-        for(let m = 0; m < i; m++) {
-            count+= 1
-            sum = sum + matrixString[m];
-            if (matrixString[m] === 0) {
-                nullElement+= 1;
-            }
-
-        }
-    }
-    let average = sum/ count;
-    return console.log(sum, nullElement, average )
-}
-
-function overDiagonalMatrix(matrix) {
-    let sum = 0;
-    let nullElement = 0;
-    let count = 0;
-    console.log(matrix)
-    for (let i = 0; i < matrix.length; i++) {
-        matrixString = matrix[i];
-        console.log(matrixString)
-        for(let m = i+1; m < matrixString.length; m++) {
-            count+= 1
-            sum = sum + matrixString[m];
-            if (matrixString[m] === 0) {
-                nullElement+= 1;
-            }
-
-        }
-    }
-    let average = sum/ count;
-    return console.log(sum, nullElement, average )
-}
-
-function DiagonalMatrix(matrix) {
-    let sum = 0;
-    let nullElement = 0;
-    let count = 0;
-    console.log(matrix)
-    for (let i = 0; i < matrix.length; i++) {
-        matrixString = matrix[i];
-        sum = sum + matrixString[i];
-        count+= 1;
-        if (matrixString[i] === 0) {
-            nullElement+= 1;
-        }
-    }
-    let average = sum/ count;
-    return console.log(sum, nullElement, average )
-}
-
-function averageArr (arr){
-    let sumOdd = 0;
-    let sumEven = 0;
-    let sum = 0;
-    let countEven = 0;
-    let countOdd = 0;
-    let count = 0;
-    function cycle(arr) {        
-        for(let j = 0; j < arr.length; j++){
-        if(arr[j] % 2 === 0) {
-            sumEven = sumEven + arr[j]; 
-            countEven = countEven + 1;
-        } else {sumOdd = sumOdd +arr[j]
-            countOdd = countOdd + 1;}
-        sum = sum + arr[j];
-        count = count + 1;
-    }}
-    if (Array.isArray(arr[0])) {
-        for(let i = 0; i < arr.length; i++) {
-            let arrIn = arr[i];
-            cycle(arrIn)
-        }
-    } else {
-       cycle(arr)
-    }
-    let averageSum = sum/count;
-    let averageOdd = sumOdd/countOdd;
-    let averageEven = sumEven/countEven;
-    
-    return {averageSum, averageOdd, averageEven}
-}
+// Реализовать функцию которая проверяет, является ли строка палиндромом
 
 function withoutPunct(string) {
+    if (typeof string !== 'string') {
+        throw new Error("Error arguments type")
+    }
     let stringWithoutPunct = '';
     for (i = 0; i < string.length; i++) {
         let letter = string[i];
         let allLetter = '!"#$%&()*+,-./:;<=>?@[\]^_{|}~';
-        if(!(allLetter.indexOf(letter) + 1)) {
-            stringWithoutPunct = stringWithoutPunct + letter
+        if (!(allLetter.indexOf(letter) + 1)) {
+            stringWithoutPunct+= letter;
         }
     }
     return stringWithoutPunct;
 
 }
 
+function isPalindrom(string) {
+    if (typeof string !== 'string') {
+        throw new Error("Error arguments type")
+    }
+    onlyLeter = withoutPunct(string).toLowerCase();
+    onlyLeter = onlyLeter.replace(/\s+/g, '');
+        for (let i = 0; i < onlyLeter.length; i++) {
+            let lastLetter = onlyLeter.length - 1;
+            if (onlyLeter[i] !== onlyLeter[(lastLetter - i)]) {
+            return  false;
+            }
+        }
+    return true;
+}
+
+//Написать функцию которая вычисляет подсчет уникальных слов в предложении
+
 function uniqueWords(string) {
+    if (typeof string !== 'string') {
+        throw new Error("Error arguments type")
+    }
     let stringWithoutPunct = withoutPunct(string);
-    console.log(stringWithoutPunct)
     let unique = 0;
     let arrString = stringWithoutPunct.split(' ');
-    
     for (let i = 0; i < arrString.length; i++) {
         let word = arrString[i];
         let flag = false;
-        
-        for(let j = 0; j < arrString.length; j++) {
-           
-            if((word === arrString[j]) && (i !== j)) {
-                console.log(arrString[j])
-                flag = true
+        for (let j = 0; j < arrString.length; j++) {
+            if ((word === arrString[j]) && (i !== j)) {
+                flag = true;
             }
-            if ((j === arrString.length -1) && (flag === false )) {
-                unique = unique + 1
+            if ((j === arrString.length - 1) && (flag === false)) {
+                ++unique
             }
-        }  
-    } 
-    return unique      
-}
-
-arr = [[1, -1, 3],
-      [4, 5, 6, 0]]
-
-function twoArray(arr, func) {
-        let sum = 0;
-        for(let i = 0; i < arr.length; i++) {
-        let embededArr = arr[i];
-        console.log(embededArr)
-        let sumEmbededArr = embededArr.reduce(func, 0);
-        sum = sum + sumEmbededArr;
+        }
     }
-    return console.log(sum)
+    return unique;
 }
 
-let sumArrays = twoArray(arr, sumAllFunc)
-let sumEvenArrays = twoArray(arr, sumEvenFunc)
-let sumMultOfThreeArrays = twoArray(arr, sumMultOfThreeFunc)
-let sumOddPositivArrays = twoArray(arr, sumOddPositivFunc)
+// Написать функцию которая вычисляет вхождение каждого слова в предложение
 
-// function amountOfElementsArreys(arr) {
-//     let nullNumbArrs = 0;
-//     let negativNumbArrs = 0;
-//     let positivNumbArrs = 0;
-//     let primeNumbArrs = 0;
-//     for(let i = 0; i < arr.length; i++) {
-//         let embededArr = arr[i];
-//         let rezultEmbArr = amountOfElements(embededArr);
-//         nullNumbArrs = nullNumbArrs + rezultEmbArr.nullNumb
-//         negativNumbArrs = negativNumbArrs + rezultEmbArr.negativNumb
-//         positivNumbArrs = positivNumbArrs + rezultEmbArr.positivNumb
-//         primeNumbArrs = primeNumbArrs + rezultEmbArr.primeNumb
-//     }
-//     return console.log(nullNumbArrs, negativNumbArrs, positivNumbArrs, primeNumbArrs)
-// }
-// amountOfElementsArreys(arr)
+function WordsCount(string) {
+    if (typeof string !== 'string') {
+        throw new Error("Error arguments type")
+    }
+    let stringWithoutPunct = withoutPunct(string).toLowerCase();
+    let wordsCount = {};
+    let arrString = stringWithoutPunct.split(' ');
+    for (let i = 0; i < arrString.length; i++) {
+        if (wordsCount[arrString[i]] === undefined) {
+            wordsCount[arrString[i]] = 1;
+        } else {
+            wordsCount[arrString[i]]+= 1
+        }
+    }
+    return wordsCount;
+}
 
-// й
+//Вычислить периметр и площадь для прямоугольника, треугольника и круга. С помощью конструктора и классов.
 
-// Написать функции которые преобразовывают число из десятичной системы счисления в двоичную и в обратную сторону. (Достаточно написать для целых положительных чисел).
+
+function Rectangle(height, width) {
+    if ((typeof height !== 'number') || (typeof width !== 'number') || (height <= 0) || (width <= 0)) {
+        throw new Error("Error arguments type")
+    }
+    this.height = height;
+    this.width = width;
+    this.squareRectangle = function () {
+        return (this.height * this.width)
+    };
+    this.perimetrRectangle = function () {
+        return (2 * (this.height + this.width))
+    };
+}
+
+calcRectangle = new Rectangle(5, 6);
+let squareRectangle = calcRectangle.squareRectangle();
+let perimetrRectangle = calcRectangle.perimetrRectangle();
+
+function Triang(sideA, sideB, sideC) {
+    if ((typeof sideA !== 'number') || (typeof sideB !== 'number') || (typeof sideC !== 'number') || (sideA <= 0) || (sideB <= 0) || (sideC <= 0) ) {
+        throw new Error("Error arguments type");
+    }
+    this.sideA = sideA;
+    this.sideB = sideB;
+    this.sideC = sideC;
+    this.squareTriang = function () {
+        let halfPer = (this.sideA + this.sideB + this.sideC) / 2
+        return (Math.sqrt(halfPer * (halfPer - this.sideA) * (halfPer - this.sideB) * (halfPer - this.sideC)));
+    };
+    this.perimetrTriang = function () {
+        return (this.sideC + this.sideA + this.sideB);
+    }
+}
+
+calcTriang = new Triang(5, 6, 7);
+squareTriang = calcTriang.squareTriang();
+perimetrTriang = calcTriang.perimetrTriang();
+
+function Circle(radius) {
+    if ((typeof radius !== 'number') || (radius <= 0)) {
+        throw new Error("Error arguments type");
+    }
+    this.radius = radius;
+    this.squareCircle = function () {
+        return Math.PI * this.radius * this.radius;
+    };
+    this.perimetrCircle = function () {
+        return Math.PI * 2 * this.radius;
+    };
+}
+
+calcCircle = new Circle(5);
+squareCircle = calcCircle.squareCircle();
+perimetrCircle = calcCircle.perimetrCircle();
+
+// class
+
+class RectangleClass {
+    constructor(height, width) {
+    this.height = height;
+    this.width = width;
+    }
+    square() {
+    return (this.height*this.width);
+    }
+    perimetr() {
+        return ((this.height+this.width)*2);
+    }
+}
+
+let calcRectangleClass  = new RectangleClass(6, 7);
+let squareRectangleClass = calcRectangleClass.square();
+let perimetrRectangleClass = calcRectangleClass.perimetr();
+
+class TriangClass {
+    constructor(sideA, sideB, sideC) {
+        this.sideA = sideA;
+        this.sideB = sideB;
+        this.sideC = sideC;
+        
+    }
+    square() {
+        let halfPer = (this.sideA + this.sideB + this.sideC) / 2;
+    return (Math.sqrt(halfPer * (halfPer - this.sideA) * (halfPer - this.sideB) * (halfPer - this.sideC)));
+}
+    perimetr() {
+        return (this.sideA + this.sideB + this.sideC);
+    }
+}
+
+let calcTriangClass  = new TriangClass(5,6,7);
+let squareTriangClass = calcTriangClass.square();
+let perimetrTriangClass = calcTriangClass.perimetr();
+
+class CircleClass {
+    constructor(radius) {
+        this.radius = radius;
+    }
+    square() {
+        return (Math.PI * this.radius * this.radius);
+    }
+    perimetr() {
+        return (Math.PI * 2 * this.radius);
+    }
+}
+
+let calcCircleClass  = new CircleClass(5);
+let squareCircleClass = calcCircleClass.square();
+let perimetrCircleClass = calcCircleClass.perimetr();
+
+
+
+// Вычислить факториал числа. Реализовать с помощью рекурсии. Реализовать мемоизированную функцию вычисления факториала.
+
+
+function factorialRecurs(number, n, k) {
+    k = k || 1;
+    n = n || 1;
+    n = n*k;
+    if(k < number) {
+        ++k;
+       return factorialRecurs(number, n, k)
+    }
+    else {
+        k = 1;
+        return n
+    }
+}
+
+
+function factorialCash(){
+    let cashCalculetion = {};
+    let k = 1;
+    
+    return function factorialCalc(number, n) {
+        n = n || 1;
+        n = n*k;
+        cashCalculetion[k] = n;
+        if(k < number) {
+            ++k;
+           return factorialCalc(number, n,)
+        }
+        else {
+            k = 1;
+            return cashCalculetion
+        }
+    }
+}
+    
+    let factorial = factorialCash();
+    
+    let memoiz = function () {
+        let cash = {};
+        let maxCash = 0;
+        return function (number) {
+            if (number in cash) {
+                return cash[number];
+            } else {
+                let result = factorial(number);
+                for(key in result) {
+                    if( key > maxCash){cash[key] = result[key]}
+                        }
+                        maxCash = number;
+                
+                return result[number];
+            }
+        }
+    }
+    
+    memoizFactorial = memoiz();
+    
+    
+    
+
+
+//Посчитать сумму всех элементов массива, только тех которые (Кратные двум, кратные трем, которые только положительные и нечетные), реализовать с помощью рекурсии для одномерного массива.
+
+let sumEvenFunc = function (item) {
+    if (item % 2 === 0) {
+        return item;
+    }
+    else { return 0 }
+}
+
+let sumMultOfThreeFunc = function (item) {
+    if (item % 3 === 0) {
+        return (item);
+    } else {
+        return 0;
+    }
+}
+
+let sumOddPositivFunc = function (item) {
+    if ((item % 2 !== 0) && (item > 0)) {
+        return (item);
+    } else {
+        return 0;
+    }
+}
+
+
+function sumArr(arr, callback) {
+     if (((callback) && (typeof callback !== 'function')) || (!Array.isArray(arr))) {
+        throw new Error("Error arguments type")
+    }
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (callback === undefined) {
+            sum = sum +  arr[i]; 
+        }
+        else {
+            sum = sum + (callback(arr[i]));
+        }
+    }
+    return sum
+}
+
+let sumAll = sumArr(arr);
+
+let sumEven = sumArr(arr, sumEvenFunc);
+
+let sumMultOfThree = sumArr(arr, sumMultOfThreeFunc);
+
+let sumOddPositiv = sumArr(arr, sumOddPositivFunc);
+
+
+function sumRecurs(arr, sum, i) {
+    if (!Array.isArray(arr)) {
+        throw new Error("Error arguments type") 
+    }
+    sum = sum || 0;
+    i = i || 0;
+    sum = sum + arr[i];
+    if (arr.length < i + 2) {
+        return sum;
+    } else {
+        return sumRecurs(arr, sum, i + 1);
+    }
+}
+
+// Посчитать количество элементов массива которые (Нулевые, отрицательные, положительные, простые числа).
+
+function nullNumb(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error("Error arguments type") 
+    }
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === 0) {
+            ++count;
+        }
+    }
+    return count;
+}
+
+function positivNumb(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error("Error arguments type") 
+    }
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > 0) {
+            ++count;
+        }
+    }
+    return count;
+}
+
+function negativNumb(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error("Error arguments type") 
+    }
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] < 0) {
+            ++count;
+        }
+    }
+    return count;
+}
+
+function primeNumb(arr) {
+    if (!Array.isArray(arr)) {
+        throw new Error("Error arguments type") 
+    }
+    let count = 0;
+    let flag = false;
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[i] > 0) {
+            for(let m = 2; m < arr[i]; m++) {
+                if((arr[i]%m === 0)) {
+                flag = true;
+                } 
+            }
+            if(flag === false) {
+            count+= 1;
+            }
+        }
+    }
+    return count; 
+}
+
+//Написать функции которые преобразовывают число из десятичной системы счисления в двоичную и в обратную сторону. (Достаточно написать для целых положительных чисел).
+
 function toBinary(numb) {
-    let binaryBacward = '';
+    if (typeof numb !== 'number') {
+        throw new Error("Error arguments type") 
+    }
+    let binaryRevers = '';
     let oneBit = 1;
     while (oneBit <= numb) {
-        if(oneBit & numb) {
-            binaryBacward = binaryBacward + '1'
-        } else { 
-            binaryBacward = binaryBacward + '0'
+        if (oneBit & numb) {
+            binaryRevers = binaryRevers + '1';
+        } else {
+            binaryRevers = binaryRevers + '0';
         }
-    oneBit = oneBit << 1 ;
+        oneBit = oneBit << 1;
     }
     let binary = '';
-    for(let i = binaryBacward.length - 1; i >= 0; i--){
-        binary = binary + binaryBacward.charAt(i);
+    for (let i = binaryRevers.length - 1; i >= 0; i--) {
+        binary = binary + binaryRevers.charAt(i);
     }
-    return binary
+    return binary;
 }
 
 function toDex(binary) {
+    if (typeof binary !== 'string') { 
+        throw new Error("Error arguments type") 
+    }
     let multiplier = 1;
     let dex = 0;
-    for(let i = binary.length - 1; i >= 0; i--) {
-        if(binary[i] === '1') {
-        dex = dex + multiplier }
-        multiplier = multiplier * 2; 
-    }
-    return dex
-}
-
-function isNegative (number) {
-    if((number >> 31)&1) {
-        return true;
-    } else {return console.log('positsve')}
-}
-
-function amountOfElements(numb) {
-    let count = 0;
-    let countOne = 0;
-    let countZero = 0;
-    let oneBit = 1;
-    while (oneBit <= numb) {
-        if(oneBit & numb) {
-            ++countOne;
-        } else { 
-            ++countZero;
+    for (let i = binary.length - 1; i >= 0; i--) {
+        if (binary[i] === '1') {
+            dex = dex + multiplier;
         }
-        oneBit = oneBit << 1 ;
+        multiplier = multiplier * 2;
+    }
+    return dex;
+}
+
+//Пункты 9 и 10 выполнить для двумерных массивов.
+
+function twoDemensArray(arr, func) {
+    if (!Array.isArray(arr)) {
+         throw new Error("Error arguments type");
+        }
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        let demensArr = arr[i];
+        let sumDemArr = sumArr(demensArr, func || undefined);
+        sum = sum + sumDemArr;
+    }
+    return sum;
+}
+
+let sumArrays = twoDemensArray(arr);
+let sumEvenArrays = twoDemensArray(arr, sumEvenFunc);
+let sumMultOfThreeArrays = twoDemensArray(arr, sumMultOfThreeFunc);
+let sumOddPositivArrays = twoDemensArray(arr, sumOddPositivFunc);
+
+// Посчитать сумму значений чисел от min до max (всех, только тех которые
+// кратны 3, только положительные). Нарисовать блок схему. Реализовать также с помощью рекурсии.
+
+function SumMinToMax(min, max, sum) {
+    if ((typeof min !== "number") || (typeof min !== "number")) { throw new Error("Error arguments type") 
+}
+    min = min + 1;
+    sum = sum || 0;
+    sum = sum + min;
+    if (min + 1 < max) {
+        return SumMinToMax(min, max, sum)
+    } else {
+        return sum;
+    }
+}
+
+function SumMinToMaxMultThree(min, max, sum) {
+    if ((typeof min !== "number") || (typeof min !== "number")) {
+         throw new Error("Error arguments type") 
+    }
+    min = min + 1;
+    sum = sum || 0;
+    if (min % 3 === 0) {
+        sum = sum + min;
+    }
+    if (min + 1 < max) {
+        return SumMinToMaxMultThree(min, max, sum)
+    } else {
+        return sum
+    }
+}
+
+function SumMinToMaxPositiv(min, max, sum) {
+    if ((typeof min !== "number") || (typeof min !== "number")) {
+         throw new Error("Error arguments type") 
+    }
+    min = min + 1;
+    sum = sum || 0;
+    if (min > 0) {
+        sum = sum + min;
+    }
+    if (min + 1 < max) {
+        return SumMinToMaxPositiv(min, max, sum)
+    } else {
+        return sum
+    }
+}
+
+function SumMinToMaxСycle(min, max) {
+    if ((typeof min !== "number") || (typeof min !== "number")) {
+        throw new Error("Error arguments type") 
+    }
+    let sum = 0;
+    for (let i = min + 1; i < max; i++) {
+        sum = sum + i;
+    }
+    return sum;
+}
+
+//Найти среднее значение всех элементов одномерного/двумерного массива (Среднее только тех которые четные и которые не четные).
+
+
+function averageArrSum(arr) {
+    let sum = 0;
+    let count = 0;
+    for (let j = 0; j < arr.length; j++) {
+        sum+=  arr[j];
         ++count;
     }
-    if((numb >> 31)&1) { 
-        countOne = countOne + (32 - count) 
-    } else {
-        countZero = countZero + (32 - count)
-    }
-    return {count, countOne, countZero}
+    let result = {sum, count};
+    return result;
 }
 
-// function InvertBit(numb)
-//     let multiplier = 1;
-//     let dex = 0;
-//     for(let i = binary.length - 1; i >= 0; i--) {
-//         if(binary[i] === '1') {
-//         dex = dex + multiplier }
-//         multiplier = multiplier * 2; 
-//     }
-//     return dex
-// }
-
-// function toInvertBit(numb) {
-//     let binaryBacward = '';
-//     let oneBit = 1;
-//     for(let i = 0; i < 32; i++) {
-//         if(oneBit & numb) {
-//             binaryBacward = binaryBacward + '0'
-//         } else { 
-//             binaryBacward = binaryBacward + '1'
-//         }
-//     oneBit = oneBit << 1 ;
-//     }
-//     let binary = '';
-//     for(let i = binaryBacward.length - 1; i >= 0; i--){
-//         binary = binary + binaryBacward.charAt(i);
-//     }
-//     return console.log(binary)
-// }
-
-//
-//  
-
-
-
-// function Counter(...args) {
-//     for(let item in args) {
-//         this[item] = args[item];
-//     }
-//     this.length = args.length;
-// }
-
-// Counter.prototype[Symbol.iterator] = function() {
-//     return {
-//         self: this,
-//         index: 0,
-//         next() {
-//             if(this.index < this.self.length) {
-//                 return {
-//                     value: this.self[this.index++],
-//                     done: false,
-//                 };
-//             }
-
-//             return {
-//                 value: undefined,
-//                 done: true,
-//             };
-//         },
-//     };
-// };
-
-// let counter = new Counter(1,2,3,4,5,6,7,8,9,10);
-// let sum = 0;
-// for(let item of counter) {
-//     sum += item;
-// }
-// console.log(sum);
-
-//let it = counter[Symbol.iterator]();
-
-
-
-// let obj = {  index: 100,
-//             [Symbol.iteration]:function(){
-//                                      let j = 1;
-//                                      let prev = 1;
-//                                      let new1 = 1;
-//                                      function next() {
-//                                          if(j++ < 100) {
-//                                             [prew, new1] = [new1, (new1 + prev)||1];
-//                                             return {prev, done:false}
-//                                          }
-//                                          else {
-//                                              return {done:true}
-//                                         }
-//                                     }
-//              }
-//         }
-   
-        
-//         for(let num of obj){console.log(prev)}
-//                                     return { 
-//                                         prew : 0,
-//                                         start : 1,
-//                                         new : 0,
-//                                         next(){
-//                                                  if(this.index < 1000){
-//                                                 this.new = this.start + this.prev;
-//                                                 this.start = this.prev;
-//                                                 this.prew = this.new;
-function FibonachiRecurs(){
-    let numbPrev = 1;
-    let numbNext = 1;
-     
-
-}
-    //                                      let j = 1;
-    //                                      let prev = 1;
-    //                                      let new1 = 1;
-    //                                      function next() {
-    //                                          if(j++ < 100) {
-    //                                             [prew, new1] = [new1, (new1 + prev)||1];
-    //                                             return {prev, done:false}
-    //                                          }
-    //                                          else {
-    //                                              return {done:true}
-    //                                         }
-    //                                     }
-    //              }
-    //         }
-       
-            
-    //         for(let num of obj){console.log(prev)}
-//                                                 return {value: this.new, done:false}}
-//                                                 return {done:true}
-
-//                                                 }
-
-//                                         }
-// }}
-
-// for (let value of obj) {let obj = {[Symbol.iteration]:function(){
-//     let index = 0;
-//         return { 
-//             prew : 0,
-//             start : 1,
-//             new : 0,
-//             next(){
-//                      if(this.index < 1000){
-//                     this.new = this.start + this.prev;
-//                     this.start = this.prev;
-//                     this.prew = this.new;
-
-//                     return {value: this.new, done:false}}
-//                     return {done:true}
-
-//                     }
-
-//             }
-// }}
-
-// for (let value of obj) {
-// console.log(value);
-
-// if (counter++ > 1000) { // let's make sure we get out!
-// break;
-// }
-
-
-// function* fibonachi(){
-//     let next = 1;
-//     let second = 1;
-//     if(true){
-//        value = second;
-//        second = next;
-//        next = second + value;
-       
-//         }
-//     }
-
-
-
-// let b = fibonachi();
-// console.log(b.next())
-
-let range = {
-    to: 9,
-    res: 0,
-    prv: 1,
-    nxt: 1,
-    [Symbol.iterator]() {
-        return this;
-    },
-    next() {
-        // if (this.prv === undefined){
-        //
-        // }
-
-        if (this.prv <= this.to) {
-            this.res = this.prv + this.nxt;
-            this.prv = this.nxt;
-            this.nxt = this.res;
-            return {
-                done: false,
-                value: this.res
-            };
-        } else {
-            this.prv = 1
-            this.nxt = 1
-
-            return {
-                done: true
-            };
+function averageEvenSum(arr) {
+    let sum = 0;
+    let count = 0;
+    for (let j = 0; j < arr.length; j++) {
+        if (arr[j] % 2 === 0) {
+           sum+= arr[j];
+           ++count;
         }
     }
-
-};
-
-//////////////////////////////////////////////////////////////
-let range2 = {
-    num: 8
+    let result = {sum, count}
+    return result;
 }
 
-range2[Symbol.iterator] = function() {
+function averageOddSum(arr) {
+    let sum = 0;
+    let count = 0;
+    for (let j = 0; j < arr.length; j++) {
+        if (arr[j] % 2 !== 0) {
+           sum+= arr[j];
+           ++count;
+        }
+    }
+    let result = {sum, count}
+    return result;
+}
 
+
+
+function average(arr, callback) {
+    if (!Array.isArray(arr) || ((callback) && (typeof callback !== 'function')) ) {
+         throw new Error("Error arguments type"); 
+        }
+    let count = 0;
+    let sum = 0;
+    if (Array.isArray(arr[0])) {
+        for (let i = 0; i < arr.length; i++) {
+            let arrIn = arr[i];
+            let callbackResult = callback(arrIn);
+            count+= callbackResult.count;
+            sum+= callbackResult.sum;
+        }
+        return (sum/count);
+    }
+    let callbackResult = callback(arr);
+    return  callbackResult.sum/callbackResult.count;
+        
+}
+
+//Транспонировать матрицу, сложить две матрицы.
+
+function transponMatrix(matrix) {
+     if (!Array.isArray(matrix)) {
+        throw new Error("Error arguments type"); 
+    }
+    console.log(matrix)
+    let newMatrix = [];
+    for (let j = 0; j < matrix.length; j++) {
+        let matrixRow = matrix[j];
+        console.log(matrixRow)
+        for (let i = 0; i < matrixRow.length; i++) {
+            if (j === 0) {
+                newMatrix.push([]);
+            }
+            newMatrix[i][j] = matrixRow[i];
+        }
+    }
+    return newMatrix;
+}
+
+
+
+function sumMatrix(matrix1, matrix2) {
+    if ((!Array.isArray(matrix1)) || (!Array.isArray(matrix2))) {
+        throw new Error("Error arguments type"); 
+    }
+    let sumMatr = [];
+    for (let i = 0; i < matrix1.length; i++) {
+        sumMatr.push([]);
+        let matrixRow1 = matrix1[i];
+        let matrixRow2 = matrix2[i];
+        for (let j = 0; j < matrixRow1.length; j++) {
+            sumMatr[i][j] = matrixRow1[j] + matrixRow2[j];
+        }
+    }
+    return sumMatr;
+}
+
+// Удалить из двумерного массива строку в которой присутствует хотя бы один нулевой элемент. Для столбца аналогично реализовать.
+
+function deleteStrngWithNull(arr, j) {
+    if (!Array.isArray(arr)) {
+         throw new Error("Error arguments type"); 
+        }
+    j = j || 0;
+    let arrString = arr[j];
+    let flag = false;
+    for (let i = 0; i < arrString.length; i++) {
+        if (arrString[i] === 0) {
+            flag = true;
+        }
+    }
+    if (flag === true) {
+        arr.splice(j, 1);
+        --j;
+    }
+    if (j + 1 < arr.length) {
+        return deleteStrngWithNull(arr, j + 1);
+    } 
+    return arr 
+}
+
+function deleteСolumnWithNull(arr, j) {
+    if (!Array.isArray(arr)) {
+         throw new Error("Error arguments type") 
+    }
+    j = j || 0;
+    let arrString = arr[j];
+    for (let i = 0; i < arrString.length; i++) {
+        if (arrString[i] === 0) {
+            for (let m = 0; m < arr.length; m++) {
+                arr[m].splice(i, 1);
+                
+            }
+            --i;
+        }
+    }
+    if (j + 1 < arr.length) {
+        return deleteСolumnWithNull(arr, j + 1);
+    } 
+    return arr; 
+}
+
+//Посчитать сумму/количество нулевых элементов/среднее значение элементов матрицы над
+// и под главной диагональю и на главной диагональю.
+
+function underDiagonalMatrixSum(arr, i) {
+    let sum = 0;
+    for (let m = arr.length - 1; m > i; m--) { 
+        sum+= arr[m];
+    }
+    return sum;
+}
+
+function overDiagonalMatrixSum(arr, i) {
+    let sum = 0;
+    for (let m = 0; m < i; m++) { 
+        sum+= arr[m];
+    }
+    return sum;
+}
+
+function countNullUnderDiagonalMatrix(arr, i) {
+    let count = 0;
+    for (let m = arr.length - 1; m > i; m--) {
+        if(arr[m] === 0){
+        ++count;
+        }
+    }
+    return  count;
+}
+
+function countNullOverDiagonalMatrix(arr, i) {
+    let count = 0;
+    for (let m = 0; m < i; m++) {
+        if(arr[m] === 0){
+        ++count;
+        }
+    }
+    return  count;
+}
+
+function calculationMatrix(matrix, callback) {
+    if (!Array.isArray(matrix)) {
+        throw new Error("Error arguments type"); 
+    }
+    for(i = 0; i < (matrix.length - 1); i++){
+        if(matrix[i].length !== matrix.length) {
+            throw new Error("arrey is not matrix")     
+        }
+    }
+    let resultAll = 0;
+    for (let i = 0; i < matrix.length; i++) {
+        matrixString = matrix[i];        
+        resultAll+= callback(matrixString, i);
+    }
+    return  resultAll;
+}
+
+function avarageUnderDiagonalMatrix(matrix) {
+    if (!Array.isArray(matrix)) {
+        throw new Error("Error arguments type");
+    }
+    for(i = 0; i < (matrix.length - 1); i++){
+        if(matrix[i].length !== matrix.length) {
+            throw new Error("arrey is not matrix")     
+        }
+    }
+    let count = 0;
+    let sum = 0;
+    for (let i = 0; i < matrix.length; i++) {
+        matrixString = matrix[i];
+        for (let m = matrixString.length - 1; m > i; m--) {    
+            sum+= matrixString[m];
+            ++count;
+        }
+    }
+    return sum/count;
+}
+
+function avarageOverDiagonalMatrix(matrix) {
+    if (!Array.isArray(matrix)) {
+        throw new Error("Error arguments type");
+    }
+    for(i = 0; i < (matrix.length - 1); i++){
+        if(matrix[i].length !== matrix.length) {
+            throw new Error("arrey is not matrix")     
+        }
+    }
+    let count = 0;
+    let sum = 0;
+    for (let i = 0; i < matrix.length; i++) {
+        matrixString = matrix[i];
+        for (let m = 0; m < i; m++) {    
+            sum+= matrixString[m];
+            ++count;
+        }
+    }
+    return sum/count;
+}
+
+function DiagonalMatrixSum(matrix) {
+        if (!Array.isArray(matrix)) {
+             throw new Error("Error arguments type") 
+        }
+        for(i = 0; i < (matrix.length - 1); i++){
+            if(matrix[i].length !== matrix.length) {
+                throw new Error("arrey is not matrix")     
+            }
+        }
+        let sum = 0;
+        for (let i = 0; i < matrix.length; i++) {
+            let matrixString = matrix[i];
+            sum+= matrixString[i];
+        }
+        return sum;
+    }
+
+   
+
+function DiagonalMatrixNull(matrix) {
+    if (!Array.isArray(matrix)) {
+        throw new Error("Error arguments type") 
+    }
+    for(i = 0; i < (matrix.length - 1); i++){
+        if(matrix[i].length !== matrix.length) {
+            throw new Error("arrey is not matrix")     
+        }
+    }
+    let nullElemCount = 0;
+    for (let i = 0; i < matrix.length; i++) {
+        if(matrix[i][i] === 0) {
+        ++nullElemCount;
+        }
+    }
+    return nullElemCount;
+}
+
+function DiagonalMatrixAvarage(matrix) {
+    if (!Array.isArray(matrix)) {
+        throw new Error("Error arguments type") 
+    }
+    for(i = 0; i < (matrix.length - 1); i++){
+        if(matrix[i].length !== matrix.length) {
+            throw new Error("arrey is not matrix")     
+        }
+    }
+    let elemCount = 0;
+    let sum = 0;
+    for (let j = 0; j < matrix.length; j++) {
+        sum+= matrix[j][j];
+        ++elemCount;
+    }
+    return sum/elemCount;
+}
+
+//Создать итерируемый объект, который на каждой итерации возвращает следующее значение числа
+//фибоначчи (Реализовать с помощью итератора и генератора). Реализовать мемоизированную функцию.
+//Реализовать с помощью рекурсии.
+
+let fibonachiIterator = {
+    num: 10,
+}
+
+fibonachiIterator[Symbol.iterator] = function () {
     let prev = 1;
     let next = 1;
-    let num = this.num
-    let res
-
+    let num = this.num;
+    let res;
     return {
         next() {
             if (prev <= num) {
                 res = prev + next;
                 prev = next;
                 next = res;
-
                 return {
                     done: false,
                     value: res
-                };
+                }
             } else {
                 return {
                     done: true
-                };
+                }
             }
         }
-
     }
 };
-///////////////////////////////////////////////////////////////////////////////////
+let l = 0;
+for (let num of fibonachiIterator) {
+    console.log(num)
+    if (l++ > 10)
+        break;
+}
 
-// range.nxt = 8
-// let n = 0;
-// for (let num of range) {
-//     console.log(num);
-//
-//     if (n++ > 30)
-//         break;
-// }
-
-function* fib(){
+function* fibonachiGenerator() {
+    let n = 10
     let prev;
     let next;
     let res;
-
-    if (prev === undefined){
-        prev = 0
-        next = 1
+    if (prev === undefined) {
+        prev = 0;
+        next = 1;
     }
-
-    while (true){
+    while (prev < n) {
         res = prev + next;
         prev = next;
         next = res;
-
         yield res
     }
 }
 
-// let fb = fib();
-//
-// let n = 0;
-// console.log(fb.next().value);
-// console.log(fb.next().value);
-// console.log(fb.next().value);
-// console.log(fb.next().value);
-// console.log(fb.next().value);
-// console.log(fb.next().value);
-// for (let num of fb) {
-//     console.log(num);
-//
-//     if (n++ > 9)
-//         break;
-// }
+let generator = fibonachiGenerator();
 
+function recursFibonachi(n, arr, numb2, res) {
+    if (typeof n !== "number") { throw new Error("Error arguments type") }
+    arrFibonachi = arr || [];
+    let numb1 = 0;
+    numb2 = numb2 || 1;
+    res = res || 0;
+    if (arrFibonachi.length < (n - 1)) {
+        numb1 = numb2;
+        numb2 = res;
+        res = numb1 + numb2;
+        arrFibonachi.push(res);
+        console.log(arrFibonachi);
+        return recursFibonachi(n, arrFibonachi, numb2, res)
+    }
+    else { return arrFibonachi }
+}
 
-function* tlGenerator(){
-    while (true)
-    {
-        yield 'red'
-        yield 'yellow'
-        yield 'green'
-        yield 'yellow'
+function fibonachiMemo() {
+    let cash = [];
+    return function (n) {
+        if (n > cash.length) {
+            cash = recursFibonachi(n);
+            console.log(cash);
+        }
+        else {
+            console.log('memo');
+            let arrResult = [];
+            for (let i = 0; i < n; i++) {
+                arrResult.push(cash[i])
+            }
+            return arrResult
+        }
+    }
+}
+let fiboMemo = fibonachiMemo();
+
+//Реализовать с помощью итератора и генератора светофор. При каждой следующей итерации мы должны получать
+//следующий корректный цвет по логике светофора.
+
+function* trafficLightGenerator() {
+    while (true) {
+        yield 'red';
+        yield 'yellow';
+        yield 'green';
+        yield 'yellow';
     }
 }
 
-let t = tlGenerator();
+let trafficLight = trafficLightGenerator();
+let n = 0;
+while (true) {
+    console.log(trafficLight.next().value);
+    if (n++ > 10)
+        break;
+}
 
-// setInterval(
-//     function (){
-//         console.log(t.next().value);
-//     },
-//     5000
-// );
-
-
-let tlIterator = {
+let trafficLightIterator = {
     num: 0,
     colors: [
         'red',
@@ -901,21 +958,68 @@ let tlIterator = {
         return this;
     },
     next() {
-            if (this.num > 3)
-                this.num = 0;
+        if (this.num > 3)
+            this.num = 0;
 
-            return {
-                done: false,
-                value: this.colors[this.num++]
-            };
+        return {
+            done: false,
+            value: this.colors[this.num++]
+        };
 
     }
 }
 
-let n = 0;
-for (let num of tlIterator) {
-    console.log(num);
-
-    if (n++ > 30)
+for (let num of trafficLightIterator) {
+    console.log(num)
+    if (l++ > 10)
         break;
+}
+
+
+// Определить является ли число отрицательным или положительным без сравнения на больше/меньше нуля (побитово).
+//     Посчитать количество битов числакоторые установлены в единицу и которые установлены в 0.
+// Написать свою реализацию для ~, двумя способами).
+
+function isNegative(number) {
+    if ((number >> 31) & 1) {
+        return true;
+    } else { return false }
+}
+
+function countOfNumber(numb) {
+    let count = 0;
+    let countOne = 0;
+    let countZero = 0;
+    let oneBit = 1;
+    while (oneBit <= numb) {
+        if (oneBit & numb) {
+            ++countOne;
+        } else {
+            ++countZero;
+        }
+        oneBit = oneBit << 1;
+        ++count;
+    }
+    if ((numb >> 31) & 1) {
+        countOne = countOne + (32 - count)
+    } else {
+        countZero = countZero + (32 - count)
+    }
+    return { count, countOne, countZero }
+}
+
+function tildaMath(numb) {
+    if (numb < 0) {
+        return Math.abs(numb) - 1
+    } else { return -(numb + 1) }
+}
+
+
+function tilda(n) {
+
+    let numb = n
+    for (let i = 0; i < 32; i++) {
+        numb = numb ^ (1 << i)
+    }
+    return numb
 }
