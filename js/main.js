@@ -4,20 +4,20 @@
 function isAnagramm(str1, str2) {
 
     if ((typeof str1 !== 'string') || (typeof str2 !== 'string')) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     if (str1.length !== str2.length) {
         return false;
-    } else {
-        for (let i = 0; i < str1.length; i++) {
-            if (str2.indexOf([str1[i]]) !== -1) {
-                str2 = str2.replace(str1[i], '');
-            }
+    }
+
+    for (let i = 0; i < str1.length; i++) {
+        if (str2.indexOf([str1[i]]) !== -1) {
+            str2 = str2.replace(str1[i], '');
         }
     }
 
-        return (str2 === '' );
+    return (str2 === '' );
 }
 
 // Написать функцию которая вычисляет подсчет количество цифр в числе. Реализовать с помощью рекурсии.
@@ -25,7 +25,7 @@ function isAnagramm(str1, str2) {
 function digitInNamber(number, index) {
 
     if (typeof number !== "number") {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     number = Math.abs(number);
@@ -33,10 +33,9 @@ function digitInNamber(number, index) {
 
     if (number / Math.pow(10, index) < 1) {
         return (index);
-    } else {
-        return digitInNamber(number, index + 1);
-    }
-
+    } 
+    return digitInNamber(number, index + 1);
+    
 }
 
 // Реализовать функцию которая проверяет, является ли строка палиндромом
@@ -44,7 +43,7 @@ function digitInNamber(number, index) {
 function withoutPunct(string) {
 
     if (typeof string !== 'string') {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     let stringWithoutPunct = '';
@@ -53,7 +52,7 @@ function withoutPunct(string) {
         let letter = string[i];
         let allLetter = '!"#$%&()*+,-./:;<=>?@[\]^_{|}~';
         if (!(allLetter.indexOf(letter) + 1)) {
-            stringWithoutPunct+= letter;
+            stringWithoutPunct += letter;
         }
     }
 
@@ -64,7 +63,7 @@ function withoutPunct(string) {
 function isPalindrom(string) {
 
     if (typeof string !== 'string') {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     onlyLeter = withoutPunct(string).toLowerCase();
@@ -85,7 +84,7 @@ function isPalindrom(string) {
 function uniqueWords(string) {
 
     if (typeof string !== 'string') {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     let stringWithoutPunct = withoutPunct(string);
@@ -116,7 +115,7 @@ function uniqueWords(string) {
 function WordsCount(string) {
 
     if (typeof string !== 'string') {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     let stringWithoutPunct = withoutPunct(string).toLowerCase();
@@ -127,9 +126,8 @@ function WordsCount(string) {
 
         if (wordsCount[arrString[i]] === undefined) {
             wordsCount[arrString[i]] = 1;
-        } else {
-            ++wordsCount[arrString[i]];
-        }
+        } 
+        ++ wordsCount[arrString[i]];
     }
 
     return wordsCount;
@@ -142,7 +140,7 @@ function WordsCount(string) {
 function Rectangle(height, width) {
 
     if ((typeof height !== 'number') || (typeof width !== 'number') || (height <= 0) || (width <= 0)) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     this.height = height;
@@ -160,12 +158,12 @@ function Rectangle(height, width) {
 
 }
 
-calcRectangle = new Rectangle(5, 6);
+let calcRectangle = new Rectangle(5, 6);
 
 function Triang(sideA, sideB, sideC) {
 
     if ((typeof sideA !== 'number') || (typeof sideB !== 'number') || (typeof sideC !== 'number') || (sideA <= 0) || (sideB <= 0) || (sideC <= 0) ) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     this.sideA = sideA;
@@ -183,11 +181,11 @@ function Triang(sideA, sideB, sideC) {
     }
 }
 
-calcTriang = new Triang(5, 6, 7);
+let calcTriang = new Triang(5, 6, 7);
 
 function Circle(radius) {
     if ((typeof radius !== 'number') || (radius <= 0)) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     this.radius = radius;
@@ -202,7 +200,7 @@ function Circle(radius) {
 
 }
 
-calcCircle = new Circle(5);
+let calcCircle = new Circle(5);
 
 // class
 
@@ -215,12 +213,12 @@ class RectangleClass {
 
 
     square() {
-    return (this.height*this.width);
+    return (this.height * this.width);
     }
 
 
     perimetr() {
-        return ((this.height+this.width)*2);
+        return ((this.height + this.width) * 2);
     }
 }
 
@@ -267,43 +265,38 @@ let calcCircleClass  = new CircleClass(5);
 
 // Вычислить факториал числа. Реализовать с помощью рекурсии. Реализовать мемоизированную функцию вычисления факториала.
 
-function factorialRecurs(number, n, k) {
+function factorialRecurs(number, result, factor) {
 
-    k = k || 1;
-    n = n || 1;
-    n = n*k;
+    factor = factor || 1;
+    result = result || 1;
+    result = result * factor;
 
-    if(k < number) {
-        ++k;
-       return factorialRecurs(number, n, k);
+    if(factor < number) {
+        ++ factor;
+       return factorialRecurs(number, result, factor);
     }
-    else {
-        k = 1;
-        return n;
-    }
+        factor = 1;
+        return result;
 }
 
 
 function factorialCash(){
 
     let cashCalculetion = {};
-    let k = 1;
+    let factor = 1;
     
-    return function factorialCalc(number, n) {
+    return function factorialCalc(number, result) {
 
-        n = n || 1;
-        n = n*k;
-        cashCalculetion[k] = n;
+        result = result || 1;
+        result = result * factor;
+        cashCalculetion[factor] = result;
 
-        if(k < number) {
-            ++k;
-           return factorialCalc(number, n,);
+        if(factor < number) {
+            ++ factor;
+           return factorialCalc(number, result);
         }
-        else {
-            k = 1;
-            return cashCalculetion;
-        }
-
+        factor = 1;
+        return cashCalculetion;
     }
 }
     
@@ -318,7 +311,8 @@ function factorialCash(){
 
             if (number in cash) {
                 return cash[number];
-            } else {
+            } 
+            
                 let result = factorial(number);
                 for(key in result) {
                     if( key > maxCash){cash[key] = result[key]}
@@ -326,7 +320,6 @@ function factorialCash(){
                         maxCash = number;
                 
                 return result[number];
-            }
         }
     }
     
@@ -339,9 +332,7 @@ let sumEvenFunc = function (item) {
     if (item % 2 === 0) {
         return item;
     }
-    else {
-        return 0;
-    }
+    return 0;
 
 }
 
@@ -349,10 +340,8 @@ let sumMultOfThreeFunc = function (item) {
 
     if (item % 3 === 0) {
         return (item);
-    } else {
-        return 0;
-    }
-
+    } 
+    return 0;
 }
 
 let sumOddPositivFunc = function (item) {
@@ -360,23 +349,20 @@ let sumOddPositivFunc = function (item) {
     if ((item % 2 !== 0) && (item > 0)) {
         return (item);
     } 
-
     return 0;
 }
 
 
 function sumArr(arr, callback) {
      if (((callback) && (typeof callback !== 'function')) || (!Array.isArray(arr))) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
     let sum = 0;
     for (let i = 0; i < arr.length; i++) {
         if (callback === undefined) {
-            sum = sum +  arr[i]; 
+            sum = sum +  arr[i];
         }
-        else {
-            sum = sum + (callback(arr[i]));
-        }
+        sum = sum + (callback(arr[i]));
     }
     return sum;
 }
@@ -384,7 +370,7 @@ function sumArr(arr, callback) {
 function sumRecurs(arr, sum, index) {
 
     if (!Array.isArray(arr)) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     sum = sum || 0;
@@ -393,10 +379,8 @@ function sumRecurs(arr, sum, index) {
 
     if (arr.length < index + 2) {
         return sum;
-    } else {
-        return sumRecurs(arr, sum, index + 1);
     }
-
+    return sumRecurs(arr, sum, index + 1);
 }
 
 // Посчитать количество элементов массива которые (Нулевые, отрицательные, положительные, простые числа).
@@ -404,14 +388,14 @@ function sumRecurs(arr, sum, index) {
 function nullNumb(arr) {
 
     if (!Array.isArray(arr)) {
-        throw new Error("Error arguments type"); 
+        throw new Error("Wrong arguments type"); 
     }
 
     let count = 0;
 
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === 0) {
-            ++count;
+            ++ count;
         }        
     }
 
@@ -421,14 +405,14 @@ function nullNumb(arr) {
 function positivNumb(arr) {
 
     if (!Array.isArray(arr)) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     let count = 0;
 
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] > 0) {
-            ++count;
+            ++ count;
         }
     }
     return count;
@@ -437,14 +421,14 @@ function positivNumb(arr) {
 function negativNumb(arr) {
 
     if (!Array.isArray(arr)) {
-        throw new Error("Error arguments type"); 
+        throw new Error("Wrong arguments type"); 
     }
 
     let count = 0;
 
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] < 0) {
-            ++count;
+            ++ count;
         }
     }
 
@@ -454,7 +438,7 @@ function negativNumb(arr) {
 function primeNumb(arr) {
 
     if (!Array.isArray(arr)) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     let count = 0;
@@ -470,7 +454,7 @@ function primeNumb(arr) {
             }
 
             if(flag === false) {
-            count+= 1;
+            count += 1;
             }
         }
     }
@@ -483,7 +467,7 @@ function primeNumb(arr) {
 function toBinary(numb) {
 
     if (typeof numb !== 'number') {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     let binaryRevers = '';
@@ -493,10 +477,8 @@ function toBinary(numb) {
 
         if (oneBit & numb) {
             binaryRevers = binaryRevers + '1';
-        } else {
-            binaryRevers = binaryRevers + '0';
-        }
-
+        } 
+        binaryRevers = binaryRevers + '0';
         oneBit<<= 1;
     }
 
@@ -512,7 +494,7 @@ function toBinary(numb) {
 function toDex(binary) {
 
     if (typeof binary !== 'string') { 
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     let multiplier = 1;
@@ -535,7 +517,7 @@ function toDex(binary) {
 function twoDemensArray(arr, func) {
 
     if (!Array.isArray(arr)) {
-         throw new Error("Error arguments type");
+         throw new Error("Wrong arguments type");
         }
 
     let sum = 0;
@@ -543,7 +525,7 @@ function twoDemensArray(arr, func) {
     for (let i = 0; i < arr.length; i++) {
         let demensArr = arr[i];
         let sumDemArr = sumArr(demensArr, func || undefined);
-        sum+= sumDemArr;
+        sum += sumDemArr;
     }
 
     return sum;
@@ -554,7 +536,7 @@ function twoDemensArray(arr, func) {
 
 function sumMinToMax(min, max, sum) {
 
-    if ((typeof min !== "number") || (typeof min !== "number")) { throw new Error("Error arguments type"); 
+    if ((typeof min !== "number") || (typeof min !== "number")) { throw new Error("Wrong arguments type"); 
 }
 
     min = min + 1;
@@ -571,7 +553,7 @@ function sumMinToMax(min, max, sum) {
 function sumMinToMaxMultThree(min, max, sum) {
 
     if ((typeof min !== "number") || (typeof min !== "number")) {
-         throw new Error("Error arguments type"); 
+         throw new Error("Wrong arguments type"); 
     }
 
     min = min + 1;
@@ -591,7 +573,7 @@ function sumMinToMaxMultThree(min, max, sum) {
 function sumMinToMaxPositiv(min, max, sum) {
 
     if ((typeof min !== "number") || (typeof min !== "number")) {
-         throw new Error("Error arguments type"); 
+         throw new Error("Wrong arguments type"); 
     }
 
     min = min + 1;
@@ -611,7 +593,7 @@ function sumMinToMaxPositiv(min, max, sum) {
 function sumMinToMaxСycle(min, max) {
 
     if ((typeof min !== "number") || (typeof min !== "number")) {
-        throw new Error("Error arguments type"); 
+        throw new Error("Wrong arguments type"); 
     }
 
     let sum = 0;
@@ -631,8 +613,8 @@ function averageArrSum(arr) {
     let count = 0;
 
     for (let j = 0; j < arr.length; j++) {
-        sum+=  arr[j];
-        ++count;
+        sum +=  arr[j];
+        ++ count;
     }
 
     let result = {sum, count};
@@ -645,8 +627,8 @@ function averageEvenSum(arr) {
 
     for (let j = 0; j < arr.length; j++) {
         if (arr[j] % 2 === 0) {
-           sum+= arr[j];
-           ++count;
+           sum += arr[j];
+           ++ count;
         }
     }
 
@@ -660,8 +642,8 @@ function averageOddSum(arr) {
 
     for (let j = 0; j < arr.length; j++) {
         if (arr[j] % 2 !== 0) {
-           sum+= arr[j];
-           ++count;
+           sum += arr[j];
+           ++ count;
         }
     }
 
@@ -674,7 +656,7 @@ function averageOddSum(arr) {
 function average(arr, callback) {
 
     if (!Array.isArray(arr) || ((callback) && (typeof callback !== 'function')) ) {
-         throw new Error("Error arguments type"); 
+         throw new Error("Wrong arguments type"); 
         }
 
     let count = 0;
@@ -685,8 +667,8 @@ function average(arr, callback) {
         for (let i = 0; i < arr.length; i++) {
             let arrIn = arr[i];
             let callbackResult = callback(arrIn);
-            count+= callbackResult.count;
-            sum+= callbackResult.sum;
+            count += callbackResult.count;
+            sum += callbackResult.sum;
         }
 
         return (sum/count);
@@ -702,7 +684,7 @@ function average(arr, callback) {
 function transponMatrix(matrix) {
 
      if (!Array.isArray(matrix)) {
-        throw new Error("Error arguments type"); 
+        throw new Error("Wrong arguments type"); 
     }
 
     let newMatrix = [];
@@ -727,7 +709,7 @@ function transponMatrix(matrix) {
 function sumMatrix(matrix1, matrix2) {
 
     if ((!Array.isArray(matrix1)) || (!Array.isArray(matrix2))) {
-        throw new Error("Error arguments type"); 
+        throw new Error("Wrong arguments type"); 
     }
 
     let sumMatr = [];
@@ -746,14 +728,14 @@ function sumMatrix(matrix1, matrix2) {
 
 // Удалить из двумерного массива строку в которой присутствует хотя бы один нулевой элемент. Для столбца аналогично реализовать.
 
-function deleteStrngWithNull(arr, j) {
+function deleteStrngWithNull(arr, index) {
 
     if (!Array.isArray(arr)) {
-         throw new Error("Error arguments type"); 
+         throw new Error("Wrong arguments type"); 
         }
 
-    j = j || 0;
-    let arrString = arr[j];
+    index = index || 0;
+    let arrString = arr[index];
     let flag = false;
 
     for (let i = 0; i < arrString.length; i++) {
@@ -763,25 +745,25 @@ function deleteStrngWithNull(arr, j) {
     }
 
     if (flag === true) {
-        arr.splice(j, 1);
-        --j;
+        arr.splice(index, 1);
+        -- index;
     }
 
-    if (j + 1 < arr.length) {
-        return deleteStrngWithNull(arr, j + 1);
+    if (index + 1 < arr.length) {
+        return deleteStrngWithNull(arr, index + 1);
     } 
 
     return arr;
 }
 
-function deleteСolumnWithNull(arr, j) {
+function deleteСolumnWithNull(arr, index) {
 
     if (!Array.isArray(arr)) {
-         throw new Error("Error arguments type");
+         throw new Error("Wrong arguments type");
     }
 
-    j = j || 0;
-    let arrString = arr[j];
+    index = index || 0;
+    let arrString = arr[index];
 
     for (let i = 0; i < arrString.length; i++) {
         if (arrString[i] === 0) {
@@ -789,12 +771,12 @@ function deleteСolumnWithNull(arr, j) {
                 arr[m].splice(i, 1);
                 
             }
-            --i;
+            -- i;
         }
     }
 
-    if (j + 1 < arr.length) {
-        return deleteСolumnWithNull(arr, j + 1);
+    if (index + 1 < arr.length) {
+        return deleteСolumnWithNull(arr, index + 1);
     } 
 
     return arr; 
@@ -828,7 +810,7 @@ function countNullUnderDiagonalMatrix(arr, i) {
 
     for (let m = arr.length - 1; m > i; m--) {
         if(arr[m] === 0){
-        ++count;
+        ++ count;
         }
     }
 
@@ -840,7 +822,7 @@ function countNullOverDiagonalMatrix(arr, i) {
 
     for (let m = 0; m < i; m++) {
         if(arr[m] === 0){
-        ++count;
+        ++ count;
         }
     }
 
@@ -850,7 +832,7 @@ function countNullOverDiagonalMatrix(arr, i) {
 function calculationMatrix(matrix, callback) {
 
     if (!Array.isArray(matrix)) {
-        throw new Error("Error arguments type"); 
+        throw new Error("Wrong arguments type"); 
     }
 
     for(i = 0; i < (matrix.length - 1); i++){
@@ -863,7 +845,7 @@ function calculationMatrix(matrix, callback) {
 
     for (let i = 0; i < matrix.length; i++) {
         matrixString = matrix[i];        
-        resultAll+= callback(matrixString, i);
+        resultAll += callback(matrixString, i);
     }
 
     return resultAll;
@@ -873,7 +855,7 @@ function calculationMatrix(matrix, callback) {
 function avarageUnderDiagonalMatrix(matrix) {
 
     if (!Array.isArray(matrix)) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     for(i = 0; i < (matrix.length - 1); i++){
@@ -888,18 +870,18 @@ function avarageUnderDiagonalMatrix(matrix) {
     for (let i = 0; i < matrix.length; i++) {
         matrixString = matrix[i];
         for (let m = matrixString.length - 1; m > i; m--) {    
-            sum+= matrixString[m];
-            ++count;
+            sum += matrixString[m];
+            ++ count;
         }
     }
 
-    return sum/count;
+    return sum / count;
 }
 
 function avarageOverDiagonalMatrix(matrix) {
 
     if (!Array.isArray(matrix)) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     for(i = 0; i < (matrix.length - 1); i++){
@@ -914,18 +896,18 @@ function avarageOverDiagonalMatrix(matrix) {
     for (let i = 0; i < matrix.length; i++) {
         matrixString = matrix[i];
         for (let m = 0; m < i; m++) {    
-            sum+= matrixString[m];
-            ++count;
+            sum += matrixString[m];
+            ++ count;
         }
     }
 
-    return sum/count;
+    return sum / count;
 }
 
 function DiagonalMatrixSum(matrix) {
 
         if (!Array.isArray(matrix)) {
-             throw new Error("Error arguments type");
+             throw new Error("Wrong arguments type");
         }
 
         for(i = 0; i < (matrix.length - 1); i++){
@@ -938,7 +920,7 @@ function DiagonalMatrixSum(matrix) {
 
         for (let i = 0; i < matrix.length; i++) {
             let matrixString = matrix[i];
-            sum+= matrixString[i];
+            sum += matrixString[i];
         }
 
         return sum;
@@ -949,7 +931,7 @@ function DiagonalMatrixSum(matrix) {
 function DiagonalMatrixNull(matrix) {
 
     if (!Array.isArray(matrix)) {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     for(i = 0; i < (matrix.length - 1); i++){
@@ -962,7 +944,7 @@ function DiagonalMatrixNull(matrix) {
 
     for (let i = 0; i < matrix.length; i++) {
         if(matrix[i][i] === 0) {
-        ++nullElemCount;
+        ++ nullElemCount;
         }
     }
 
@@ -972,7 +954,7 @@ function DiagonalMatrixNull(matrix) {
 function DiagonalMatrixAvarage(matrix) {
 
     if (!Array.isArray(matrix)) {
-        throw new Error("Error arguments type"); 
+        throw new Error("Wrong arguments type"); 
     }
 
     for(i = 0; i < (matrix.length - 1); i++){
@@ -985,11 +967,11 @@ function DiagonalMatrixAvarage(matrix) {
     let sum = 0;
 
     for (let j = 0; j < matrix.length; j++) {
-        sum+= matrix[j][j];
-        ++elemCount;
+        sum += matrix[j][j];
+        ++ elemCount;
     }
 
-    return sum/elemCount;
+    return sum / elemCount;
 }
 
 //Создать итерируемый объект, который на каждой итерации возвращает следующее значение числа
@@ -1016,18 +998,17 @@ fibonachiIterator[Symbol.iterator] = function () {
                     done: false,
                     value: res
                 }
-            } else {
-                return {
-                    done: true
-                }
+            }   
+            return {
+                done: true
             }
         }
     }
 };
-let l = 0;
+let i = 0;
 for (let num of fibonachiIterator) {
     console.log(num)
-    if (l++ > 10)
+    if (i ++ > 10)
         break;
 }
 
@@ -1055,7 +1036,7 @@ let generator = fibonachiGenerator();
 function recursFibonachi(index, arr, numb2, res) {
 
     if (typeof index !== "number") {
-        throw new Error("Error arguments type");
+        throw new Error("Wrong arguments type");
     }
 
     arrFibonachi = arr || [];
@@ -1083,13 +1064,11 @@ function fibonachiMemo() {
             cash = recursFibonachi(index);
             console.log(cash);
         }
-        else {
-            let arrResult = [];
-            for (let i = 0; i < index; i++) {
-                arrResult.push(cash[i]);
-            }
-            return arrResult;
+        let arrResult = [];
+        for (let i = 0; i < index; i++) {
+            arrResult.push(cash[i]);
         }
+        return arrResult;
     }
 }
 let fiboMemo = fibonachiMemo();
@@ -1108,11 +1087,11 @@ function* trafficLightGenerator() {
 }
 
 let trafficLight = trafficLightGenerator();
-let n = 0;
 
+let index = 0;
 while (true) {
     console.log(trafficLight.next().value);
-    if (n++ > 10)
+    if (index ++ > 10)
         break;
 }
 
@@ -1139,10 +1118,10 @@ let trafficLightIterator = {
 
     }
 }
-
+let ind = 0;
 for (let num of trafficLightIterator) {
-    console.log(num)
-    if (l++ > 10)
+    console.log(num);
+    if (ind ++ > 10)
         break;
 }
 
@@ -1155,7 +1134,8 @@ function isNegative(number) {
 
     if ((number >> 31) & 1) {
         return true;
-    } else { return false }
+    } 
+    return false 
 }
 
 function countOfNumber(numb) {
@@ -1167,30 +1147,31 @@ function countOfNumber(numb) {
     while (oneBit <= numb) {
 
         if (oneBit & numb) {
-            ++countOne;
-        } else {
-            ++countZero;
-        }
+            ++ countOne;
+        } 
+            ++ countZero;
+    
 
         oneBit <<= 1;
-        ++count;
+        ++ count;
     }
 
     if ((numb >> 31) & 1) {
         countOne = countOne + (32 - count);
-    } else {
-        countZero = countZero + (32 - count);
-    }
+    } 
+    countZero = countZero + (32 - count);
+    
 
     return { count, countOne, countZero };
 }
 
 function tildaMath(numb) {
-    
+
     if (numb < 0) {
         return Math.abs(numb) - 1;
-    } else { return -(numb + 1) }
-}
+    } 
+    return -(numb + 1) }
+
 
 
 function tilda(number) {
