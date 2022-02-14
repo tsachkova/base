@@ -486,10 +486,9 @@ function SumMinToMax(min, max, sum) {
     sum = sum + min;
     if (min + 1 < max) {
         return SumMinToMax(min, max, sum)
-    } else {
-        return sum;
     }
-}
+        return sum;
+ }
 
 function SumMinToMaxMultThree(min, max, sum) {
     if ((typeof min !== "number") || (typeof min !== "number")) {
@@ -502,9 +501,8 @@ function SumMinToMaxMultThree(min, max, sum) {
     }
     if (min + 1 < max) {
         return SumMinToMaxMultThree(min, max, sum)
-    } else {
-        return sum
-    }
+    } 
+    return sum
 }
 
 function SumMinToMaxPositiv(min, max, sum) {
@@ -518,9 +516,8 @@ function SumMinToMaxPositiv(min, max, sum) {
     }
     if (min + 1 < max) {
         return SumMinToMaxPositiv(min, max, sum)
-    } else {
-        return sum
-    }
+    }  
+    return sum;
 }
 
 function SumMinToMaxСycle(min, max) {
