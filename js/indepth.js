@@ -14,8 +14,7 @@ Array.prototype.myFilter = function(callback) {
     let myArr = this;
     
     for(let i = 0; i < myArr.length; i++) {
-        let result = callback(myArr[i], i, myArr);
-        if(Boolean(result)) {
+        if(callback(myArr[i], i, myArr)) {
             newArr.push(myArr[i]);
         }
     }
@@ -23,50 +22,34 @@ Array.prototype.myFilter = function(callback) {
     return newArr;
 }
 
-Array.prototype.myReduce = function(callback, initial) {
+Array.prototype.myReduce = function(callback, initialValue) {
     let myArr = this;
     let previous;
-    let result;
-
-    if(initial) {
-    previous = initial;
+   
+    if(initialValue) {
+        previous = initialValue;
+        for(let i = 0; i < myArr.length; i++) {
+            previous = callback(previous, myArr[i], i, myArr);
+        }
+        return previous;
     }
 
-    if(!previous) {
-        if(typeof myArr[0] === 'number') {
-            previous = 0;
-        }
-        else {
-            previous = '';
-        }
+    previous = myArr[0];
+    for(let i = 1; i < myArr.length; i++) {
+        previous = callback(previous, myArr[i], i, myArr);
     }
-    
-    for(let i = 0; i < myArr.length; i++) {
-        if(initial){
-            result = callback(previous, myArr[i], i, myArr);
-        }
-        else {
-            result = callback(previous, myArr[i], ++i, myArr);
-        }
-       
-        previous = result;
-    }
+        
     return previous;
 }
 
 Array.prototype.myFind = function(callback) {
-    let search;
     let myArr = this;
     
     for(let i = 0; i < myArr.length; i++) {
-        let result = callback(myArr[i], i, myArr);
-        if(result) {
-            search = myArr[i];
-            break;
+        if(callback(myArr[i], i, myArr)){
+            return myArr[i];
         }
     }
-
-    return search;
 }
 
 Array.prototype.myForEach = function(callback) {
@@ -77,22 +60,22 @@ Array.prototype.myForEach = function(callback) {
     }
 }
 
-Function.prototype.myBind = function(obj, ...rest) {
-    let func = this;
+Function.prototype.myBind = function(myThis, ...rest) {
+    let targetFunc = this;
     return function context(args){
        let keyName = '' + new Date();
-       obj[keyName] = func;
-       let resFunc = obj[keyName](...rest, args);
-       delete obj[keyName];
-       return resFunc;
+       myThis[keyName] = targetFunc;
+       let resultFunc = myThis[keyName](...rest, args);
+       delete myThis[keyName];
+       return resultFunc;
    };
 }
 
-Function.prototype.myCall = function(obj, ...rest) {
-    func = this;
+Function.prototype.myCall = function(myThis, ...rest) {
+    let targetFunc = this;
     let keyName = '' + new Date();
-    obj[keyName] = func;
-    let resFunc = obj[keyName](...rest);
-    delete obj[keyName];
-    return resFunc;
+    myThis[keyName] = targetFunc;
+    let resultFunc = myThis[keyName](...rest);
+    delete myThis[keyName];
+    return resultFunc;
 }
