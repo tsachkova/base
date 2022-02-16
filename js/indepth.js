@@ -3,7 +3,7 @@ Array.prototype.myMap = function(callback) {
     let myArr = this;
     
     for(let i = 0; i < myArr.length; i++) {
-        newArr.push(callback(myArr[i], i, myArr))
+        newArr.push(callback(myArr[i], i, myArr));
     }
 
     return newArr;
@@ -85,7 +85,7 @@ Function.prototype.myBind = function(obj, ...rest) {
        let resFunc = obj[keyName](...rest, args);
        delete obj[keyName];
        return resFunc;
-   }
+   };
 }
 
 Function.prototype.myCall = function(obj, ...rest) {
