@@ -1,96 +1,89 @@
-Array.prototype.myMap = function(callback) {
-    if(typeof callback !== 'function') {
-        throw new Error("callback is not a function"); 
-       }
-    let newArr = [];
-    let myArr = this;
-    
-    for(let i = 0; i < myArr.length; i++) {
-        newArr.push(callback(myArr[i], i, myArr));
+Array.prototype.customMap = function (callback) {
+    if (typeof callback !== 'function') {
+        throw new Error("callback is not a function");
+    }
+    let result = [];
+
+    for (let i = 0; i < this.length; i++) {
+        result.push(callback(this[i], i, this));
     }
 
-    return newArr;
+    return result;
 }
 
-Array.prototype.myFilter = function(callback) {
-    if(typeof callback !== 'function') {
-        throw new Error("callback is not a function"); 
-       }
-    let newArr = [];
-    let myArr = this;
-    
-    for(let i = 0; i < myArr.length; i++) {
-        if(callback(myArr[i], i, myArr)) {
-            newArr.push(myArr[i]);
+Array.prototype.customFilter = function (callback) {
+    if (typeof callback !== 'function') {
+        throw new Error("callback is not a function");
+    }
+    let result = [];
+
+    for (let i = 0; i < this.length; i++) {
+        if (callback(this[i], i, this)) {
+            result.push(this[i]);
         }
     }
 
-    return newArr;
+    return result;
 }
 
-Array.prototype.myReduce = function(callback, initialValue) {
-    if(typeof callback !== 'function') {
-        throw new Error("callback is not a function"); 
-       }
-    let myArr = this;
+Array.prototype.customReduce = function (callback, initialValue) {
+    if (typeof callback !== 'function') {
+        throw new Error("callback is not a function");
+    }
     let previous;
-   
-    if(initialValue) {
-        previous = initialValue;
-        for(let i = 0; i < myArr.length; i++) {
-            previous = callback(previous, myArr[i], i, myArr);
-        }
-        return previous;
-    }
+    let cycleStart;
 
-    previous = myArr[0];
-    for(let i = 1; i < myArr.length; i++) {
-        previous = callback(previous, myArr[i], i, myArr);
+    if (initialValue) {
+        previous = initialValue;
+        }
+        else {
+            previous = this[0];
+            cycleStart = 1;
+        }
+    
+    for (let i = cycleStart || 0; i < this.length; i++) {
+        previous = callback(previous, this[i], i, this);
     }
-        
     return previous;
 }
 
-Array.prototype.myFind = function(callback) {
-    if(typeof callback !== 'function') {
-        throw new Error("callback is not a function"); 
-       }
-    let myArr = this;
-    
-    for(let i = 0; i < myArr.length; i++) {
-        if(callback(myArr[i], i, myArr)){
-            return myArr[i];
+Array.prototype.customFind = function (callback) {
+    if (typeof callback !== 'function') {
+        throw new Error("callback is not a function");
+    }
+
+    for (let i = 0; i < this.length; i++) {
+        if (callback(this[i], i, this)) {
+            return this[i];
         }
     }
 }
 
-Array.prototype.myForEach = function(callback) {
-    if(typeof callback !== 'function') {
-        throw new Error("callback is not a function"); 
-       }
-    let myArr = this;
-    
-    for(let i = 0; i < myArr.length; i++) {
-        callback(myArr[i], i, myArr);
+Array.prototype.customForEach = function (callback) {
+    if (typeof callback !== 'function') {
+        throw new Error("callback is not a function");
+    }
+
+    for (let i = 0; i < this.length; i++) {
+        callback(this[i], i, this);
     }
 }
 
-Function.prototype.myBind = function(myThis, ...rest) {
+Function.prototype.customBind = function (customThis, ...rest) {
     let targetFunc = this;
-    return function context(args){
-       let keyName = Symbol('keyName');
-       myThis[keyName] = targetFunc;
-       let resultFunc = myThis[keyName](...rest, args);
-       delete myThis[keyName];
-       return resultFunc;
-   };
+    return function context(args) {
+        let keyName = Symbol('keyName');
+        customThis[keyName] = targetFunc;
+        let resultFunc = customThis[keyName](...rest, args);
+        delete customThis[keyName];
+        return resultFunc;
+    };
 }
 
-Function.prototype.myCall = function(myThis, ...rest) {
-    let targetFunc = this;
+Function.prototype.customCall = function (customThis, ...rest) {
     let keyName = Symbol('keyName');
-    myThis[keyName] = targetFunc;
-    let resultFunc = myThis[keyName](...rest);
-    delete myThis[keyName];
+    customThis[keyName] = this;
+    let resultFunc = customThis[keyName](...rest);
+    delete customThis[keyName];
     return resultFunc;
 }
