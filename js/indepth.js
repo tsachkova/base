@@ -1,4 +1,7 @@
 Array.prototype.myMap = function(callback) {
+    if(typeof callback !== 'function') {
+        throw new Error("callback is not a function"); 
+       }
     let newArr = [];
     let myArr = this;
     
@@ -10,6 +13,9 @@ Array.prototype.myMap = function(callback) {
 }
 
 Array.prototype.myFilter = function(callback) {
+    if(typeof callback !== 'function') {
+        throw new Error("callback is not a function"); 
+       }
     let newArr = [];
     let myArr = this;
     
@@ -23,6 +29,9 @@ Array.prototype.myFilter = function(callback) {
 }
 
 Array.prototype.myReduce = function(callback, initialValue) {
+    if(typeof callback !== 'function') {
+        throw new Error("callback is not a function"); 
+       }
     let myArr = this;
     let previous;
    
@@ -43,6 +52,9 @@ Array.prototype.myReduce = function(callback, initialValue) {
 }
 
 Array.prototype.myFind = function(callback) {
+    if(typeof callback !== 'function') {
+        throw new Error("callback is not a function"); 
+       }
     let myArr = this;
     
     for(let i = 0; i < myArr.length; i++) {
@@ -53,6 +65,9 @@ Array.prototype.myFind = function(callback) {
 }
 
 Array.prototype.myForEach = function(callback) {
+    if(typeof callback !== 'function') {
+        throw new Error("callback is not a function"); 
+       }
     let myArr = this;
     
     for(let i = 0; i < myArr.length; i++) {
@@ -63,7 +78,7 @@ Array.prototype.myForEach = function(callback) {
 Function.prototype.myBind = function(myThis, ...rest) {
     let targetFunc = this;
     return function context(args){
-       let keyName = '' + new Date();
+       let keyName = Symbol('keyName');
        myThis[keyName] = targetFunc;
        let resultFunc = myThis[keyName](...rest, args);
        delete myThis[keyName];
@@ -73,7 +88,7 @@ Function.prototype.myBind = function(myThis, ...rest) {
 
 Function.prototype.myCall = function(myThis, ...rest) {
     let targetFunc = this;
-    let keyName = '' + new Date();
+    let keyName = Symbol('keyName');
     myThis[keyName] = targetFunc;
     let resultFunc = myThis[keyName](...rest);
     delete myThis[keyName];
