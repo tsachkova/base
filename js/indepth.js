@@ -35,12 +35,11 @@ Array.prototype.customReduce = function (callback, initialValue) {
 
     if (initialValue) {
         previous = initialValue;
-        }
-        else {
-            previous = this[0];
-            cycleStart = 1;
-        }
-    
+    } else {
+        previous = this[0];
+        cycleStart = 1;
+    }
+
     for (let i = cycleStart || 0; i < this.length; i++) {
         previous = callback(previous, this[i], i, this);
     }
