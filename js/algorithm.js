@@ -19,28 +19,53 @@ function insertionSort(arr) {
 }
 
 
-function quickSort(arr) {
-    let sortArr = arr;
+function quickSort(arr, start, end) {
+    start = start || 0;
+    end = end || arr.length;
+    if((end - start) <= 1){
+        return;
+    }
     let temp;
-    let number = 0;
-    for (let i = 1; i < sortArr.length; i++) {
-        if (sortArr[i] < sortArr[number]) {
-            temp = sortArr[i];
-            if(number === i-1) {
-                sortArr[i] = sortArr[number];
-                sortArr[number] = temp; 
-                number = i;
-            }
-            else {
-                sortArr[i] = sortArr[number + 1];
-                sortArr[number +1] = sortArr[number];
-                sortArr[number] = temp;
-                number = ++number
-            }
+    let separator;
+    let number = end - 1;
+    //let separat = Math.round((end - start) / 1);
+    for (let i = start; i < end; i++) {
+        if ((arr[i] >= arr[number])&&(number>i)) {
+
+            temp = arr[i];
+            // if(number === i+1) {
+            //     arr[i] = arr[number];
+            //     arr[number] = temp; 
+            //     number = i;
+            //     --i
+            // }
+            
+                arr[i] = arr[number - 1];
+                arr[number -1] = arr[number];
+                arr[number] = temp;
+                number = --number;
+                --i;
+                       
         }
     }
-    // if ()
-    return sortArr
+    console.log(arr);
+    console.log(number);
+    
+    
+    if(start === 0) {
+        console.log('lll')
+    quickSort(arr, start, number);
+    }
+    console.log('jamp');
+    
+    
+    return  quickSort(arr, number +1, 0);
+    
+
+    // console.log('jamp');
+    // quickSort(arr, number +1, end);
+    
+  
 }
 //     function recursSort(indexMore, indexLess) {
 //         indexMore = indexMore || sortArr.length;
