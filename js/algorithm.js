@@ -1,103 +1,219 @@
-function insertionSort(arr) {
-    let mixArr = arr;
+
+
+
+
+function sortObject(elementPrev, elementNext, property) {
+    return (elementPrev[property] > elementNext[property]);
+}
+
+function sortPrimitive(elementPrev, elementNext) {
+    return (elementPrev > elementNext);
+}
+
+Array.prototype.insertionSort = function(callback, property) {
     let temp;
-    for (let i = 1; i < arr.length; i++) {
-        sortNumber = arr[i];
+    for (let i = 1; i < this.length; i++) {
+        sortNumber = this[i];
         for (let j = 0; j < i; j++) {
-            if (arr[j] > arr[i]) {
-                temp = arr[i];
+            
+            // if (arr[j] > arr[i])
+            if (callback(this[j], this[i], property))
+            {
+                
+                temp = this[i];
                 for (let m = i; m > j; m--) {
-                    arr[m] = arr[m - 1];
+                    this[m] = this[m - 1];
                 }
-                arr[j] = temp;
+                this[j] = temp;
             }
 
         }
     }
-    return console.log(mixArr)
+    return console.log(this)
 
 }
 
-
-function quickSort(arr, start, end) {
-    start = start || 0;
-    end = end || arr.length;
-    if((end - start) <= 1){
-        return;
-    }
+Array.prototype.bubbleSort = function(callback, property) {
+    let count = 0;
     let temp;
-    let separator;
-    let number = end - 1;
-    //let separat = Math.round((end - start) / 1);
-    for (let i = start; i < end; i++) {
-        if ((arr[i] >= arr[number])&&(number>i)) {
+    for(let i = 0; true; i++) {
+        for(let j = 0; j < this.length - 1; j++) {
+            if(callback(this[j],this[j + 1], property)) {
 
-            temp = arr[i];
-            // if(number === i+1) {
-            //     arr[i] = arr[number];
-            //     arr[number] = temp; 
-            //     number = i;
-            //     --i
-            // }
-            
-                arr[i] = arr[number - 1];
-                arr[number -1] = arr[number];
-                arr[number] = temp;
-                number = --number;
-                --i;
-                       
+                    temp = this[j];
+                    this[j] = this[j+1];
+                    this[j+1] = temp;
+                    ++count;
+                    console.log(this[j])
+                
+            }
+        }console.log(count)
+        if (count === 0) {
+            return this;
         }
-    }
-    console.log(arr);
-    console.log(number);
-    
-    
-    if(start === 0) {
-        console.log('lll')
-    quickSort(arr, start, number);
-    }
-    console.log('jamp');
-    
-    
-    return  quickSort(arr, number +1, 0);
-    
+        count = 0;
 
-    // console.log('jamp');
-    // quickSort(arr, number +1, end);
-    
-  
+    }    
 }
-//     function recursSort(indexMore, indexLess) {
-//         indexMore = indexMore || sortArr.length;
-//         indexLess = indexLess || 0;
-//         let flag;
-//         for (let i = indexLess; i < separator; i++) {
-//             if (sortArr[separator] > sortArr[i]) {
-//                 for (let j = indexMore; j > separator; j--) {
-//                     if (sortArr[separator] < sortArr[i]) {
-//                         temp = arr[j];
-//                         arr[j] = arr[i];
-//                         arr[i] = temp;
-//                         indexMore = j;
-//                         flag = true;
-//                         break;
-//                     }
-                 
-//                 }
-//             indexLess = i;
-//             break;
-//         }
+
+
+
+    let root;
+    function bynaryTree(number) {
+        class Node {
+            constructor(number) {
+                this.number = number;
+                this.left = 0;
+                this.right = 0;
+            }
+        }
+        
+        if (root === undefined) {
+            root = new Node (number);
+        } else {
+            let way = root;
+            for(let i = 0; true; i++ ) {
+                if (number > way.number){
+                    
+                    if (way.right !==0) {
+
+                        way = way.right;
+                    } else { way.right = new Node(number);
+                            break;
+                    }
+                }
+                if (number < way.number){
+                    if (way.left !== 0)  {
+                        way = way.left;
+                    } else { way.left = new Node(number);
+                            break;
+                    }    
+                    
+                }
+          
+            }
+            // way = new Node (number);
+        }    
+            
+        return root;
+    }
 
 
 
 
-//     }
-//     let more;
-//     let less;
+function BynarySearch(number) {
+    let way = root;
+    for(let i = 0; true; i++ ) {
+        if(way.number === number) {
+            return way;
+        }
 
+        if (number > way.number){            
+            if (way.right !==0) {
+                way = way.right;
+            } else { 
+                throw new Error("Number not found");
+            }
+        }
 
+        if (number < way.number){
+            if (way.left !== 0)  {
+                way = way.left;
+            } else { 
+                throw new Error("Number not found");
+            }    
+            
+        }
+  
+    }
+}
 
-// }
+function bynaryDelete(number, way, parent){
+    parent = parent || undefined;
+    way = way || root;
+   
+    
+        if (number > way.number){            
+            if (way.right !==0) {
+                parent = way;
+                way = way.right;
+            } else { 
+                throw new Error("Number not found");
+            }
 
+        }
+        if (number < way.number){            
+            if (way.left !==0) {
+                parent = way;
+                way = way.left;
 
+            } else { 
+                throw new Error("Number not found");
+            }
+        }
+
+        if(number === way.number) {
+            if((way.left === 0) && (way.right === 0)) {
+                
+                if(way.number < parent.number) {
+                    parent.left = 0;
+                    
+                }
+                if(way.number > parent.number) {
+                    parent.right = 0;
+                    
+                }
+                return;
+
+            } 
+            if((way.left === 0) && (way.right !== 0)) {
+                if(way.number < parent.number) {
+                    parent.left = way.right;
+                    
+                }
+                if(way.number > parent.number) {
+                    parent.right = way.right;
+                   
+                }
+                return;
+
+            }
+
+            if((way.left !== 0) && (way.right === 0)) {
+                if(way.number < parent.number) {
+                    parent.left = way.left;
+                    
+                }
+                if(way.number > parent.number) {
+                    parent.right = way.left;
+                    
+                }
+                return
+
+            }
+
+            if((way.left !== 0) && (way.right !== 0)) {
+                let minElement = way.right;
+                let minElementPerent;
+                for(i = 0; true; i++) {
+                    if(minElement.left !== 0) {
+                        minElementPerent = minElement;
+                        minElement = minElement.left;
+                        console.log(minElement);} 
+                    if (minElement.left === 0) {
+                        console.log(minElement);
+                        way.number = minElement.number;
+                        if(minElement.right !== 0) {
+                            minElementPerent.right = minElement.right;
+                        }
+                        return
+                    }
+
+                }
+
+            }
+    
+        }
+        return bynaryDelete(number, way, parent);
+    }
 
