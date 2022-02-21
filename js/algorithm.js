@@ -4,7 +4,9 @@ function insertionSort(arr) {
     for (let i = 1; i < arr.length; i++) {
         sortNumber = arr[i];
         for (let j = 0; j < i; j++) {
+            
             if (arr[j] > arr[i]) {
+                console.log(mixArr)
                 temp = arr[i];
                 for (let m = i; m > j; m--) {
                     arr[m] = arr[m - 1];
@@ -21,83 +23,90 @@ function insertionSort(arr) {
 
 function quickSort(arr, start, end) {
     start = start || 0;
-    end = end || arr.length;
-    if((end - start) <= 1){
-        return;
+    if(end === 0) {
+        end === 0;
+    } else {
+        end = end || arr.length;
     }
-    let temp;
-    let separator;
-    let number = end - 1;
-    //let separat = Math.round((end - start) / 1);
-    for (let i = start; i < end; i++) {
-        if ((arr[i] >= arr[number])&&(number>i)) {
 
+    let temp;
+    let number = end - 1;
+
+    for (let i = start; i < end ; i++) {
+        if ((arr[i] > arr[number])&&(number > i)) {
             temp = arr[i];
-            // if(number === i+1) {
-            //     arr[i] = arr[number];
-            //     arr[number] = temp; 
-            //     number = i;
-            //     --i
-            // }
-            
-                arr[i] = arr[number - 1];
-                arr[number -1] = arr[number];
-                arr[number] = temp;
-                number = --number;
-                --i;
-                       
+            arr[i] = arr[number - 1];
+            arr[number -1] = arr[number];
+            arr[number] = temp;
+            number = --number;
+            --i;
         }
     }
     console.log(arr);
+    console.log(start);
     console.log(number);
     
-    
-    if(start === 0) {
-        console.log('lll')
-    quickSort(arr, start, number);
+    if(!((end - start) <= 2)) {
+        return  quickSort(arr, start, number);
     }
-    console.log('jamp');
     
     
-    return  quickSort(arr, number +1, 0);
+    end = arr.length;
+    console.log('jump');
+    console.log(end);
+    console.log(number);
     
-
-    // console.log('jamp');
-    // quickSort(arr, number +1, end);
-    
-  
+    if(!((end - start) <= 2)) {
+        return  quickSort(arr, ++number, end);
+    }
+    return arr;
+          
 }
-//     function recursSort(indexMore, indexLess) {
-//         indexMore = indexMore || sortArr.length;
-//         indexLess = indexLess || 0;
-//         let flag;
-//         for (let i = indexLess; i < separator; i++) {
-//             if (sortArr[separator] > sortArr[i]) {
-//                 for (let j = indexMore; j > separator; j--) {
-//                     if (sortArr[separator] < sortArr[i]) {
-//                         temp = arr[j];
-//                         arr[j] = arr[i];
-//                         arr[i] = temp;
-//                         indexMore = j;
-//                         flag = true;
-//                         break;
-//                     }
-                 
-//                 }
-//             indexLess = i;
-//             break;
-//         }
+
+
+function bynaryCash(){
+    let root;
+    return function bynaryTree(number) {
+        class Node {
+            constructor(number) {
+                this.number = number;
+                this.left = 0;
+                this.right = 0;
+            }
+        }
+        
+        if (root === undefined) {
+            root = new Node (number);
+        } else {
+            let way = root;
+            console.log(way.right);
+            for(let i = 0; true; i++ ) {
+                if (number > way.number){
+                    
+                    if (way.right !==0) {
+
+                        way = way.right;
+                    } else { way.right = new Node(number);
+                            break;
+                    }
+                }
+                if (number < way.number){
+                    if (way.left !== 0)  {
+                        way = way.left;
+                    } else { way.left = new Node(number);
+                            break;
+                    }    
+                    
+                }
+          
+            }
+            // way = new Node (number);
+        }    
+            
+        return root;
+    }
+}
 
 
 
-
-//     }
-//     let more;
-//     let less;
-
-
-
-// }
-
-
-
+let bynaryTree = bynaryCash();
