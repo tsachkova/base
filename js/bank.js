@@ -1,16 +1,28 @@
 // class Client {
-//     constructor(firstName, lastName, isActive, date, debit){
+//     constructor(firstName, lastName, isActive, date, debit...rest){
 //         this.firstName = firstName;
 //         this.lastName = lastName;
 //         this.isActive = isActive;
 //         this.date = date;
 //         this.debit = debit;
-//         changeCreditSum(sum) {
+//         countCreditAccount;
+//         countDebetAccount;
+//     }
+// }
+//     class CreditAccount {
+//         constructor(sum, limit) {
+//             this.sum = sum;
+//             this.limit = limit;
+//         }
+// }
+
+    
+//         addCreditAccount(sum, limit) {
 //             if((sumCredit + sum) > limCredit) {
 //                 this.credit.sumCredit = 
 //             }
 //         }
-//     }
+    
 // }
 
 // class Credit{
