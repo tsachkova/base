@@ -1,112 +1,231 @@
-function insertionSort(arr) {
-    let mixArr = arr;
-    let temp;
-    for (let i = 1; i < arr.length; i++) {
-        sortNumber = arr[i];
-        for (let j = 0; j < i; j++) {
-            
-            if (arr[j] > arr[i]) {
-                console.log(mixArr)
-                temp = arr[i];
-                for (let m = i; m > j; m--) {
-                    arr[m] = arr[m - 1];
-                }
-                arr[j] = temp;
-            }
 
-        }
-    }
-    return console.log(mixArr)
-
+function sortObject(elementPrev, elementNext, property) {
+    return (elementPrev[property] > elementNext[property]);
 }
 
-
-function quickSort(arr, start, end) {
-    start = start || 0;
-    if(end === 0) {
-        end === 0;
-    } else {
-        end = end || arr.length;
-    }
-
-    let temp;
-    let number = end - 1;
-
-    for (let i = start; i < end ; i++) {
-        if ((arr[i] > arr[number])&&(number > i)) {
-            temp = arr[i];
-            arr[i] = arr[number - 1];
-            arr[number -1] = arr[number];
-            arr[number] = temp;
-            number = --number;
-            --i;
-        }
-    }
-    console.log(arr);
-    console.log(start);
-    console.log(number);
-    
-    if(!((end - start) <= 2)) {
-        return  quickSort(arr, start, number);
-    }
-    
-    
-    end = arr.length;
-    console.log('jump');
-    console.log(end);
-    console.log(number);
-    
-    if(!((end - start) <= 2)) {
-        return  quickSort(arr, ++number, end);
-    }
-    return arr;
-          
+function sortPrimitiveArr(elementPrev, elementNext) {
+    return (elementPrev > elementNext);
 }
 
-
-function bynaryCash(){
-    let root;
-    return function bynaryTree(number) {
-        class Node {
-            constructor(number) {
-                this.number = number;
-                this.left = 0;
-                this.right = 0;
-            }
-        }
+Array.prototype.insertionSort = function (callback, property) {
+    if (typeof callback !== 'function') {
+        throw new Error("callback is not a function");
+    }
+    
+    for (let i = 1; i < this.length; i++) {
+        let temporary = this[i];
+        j = i - 1;
         
-        if (root === undefined) {
-            root = new Node (number);
-        } else {
-            let way = root;
-            console.log(way.right);
-            for(let i = 0; true; i++ ) {
-                if (number > way.number){
-                    
-                    if (way.right !==0) {
+        while (callback(this[j], temporary, property) && (j >= 0)) {
+            this[j + 1] = this[j];
+            j-- ; 
+        } 
 
-                        way = way.right;
-                    } else { way.right = new Node(number);
-                            break;
-                    }
-                }
-                if (number < way.number){
-                    if (way.left !== 0)  {
-                        way = way.left;
-                    } else { way.left = new Node(number);
-                            break;
-                    }    
-                    
-                }
-          
+        this[j + 1] = temporary;                
+    } 
+    
+    return this;
+}
+
+Array.prototype.bubbleSort = function (callback, property) {
+    if (typeof callback !== 'function') {
+        throw new Error("callback is not a function");
+    }
+
+    for (let i = 0; i < this.length; i++) {
+        for (let j = 0; j < this.length - i; j++) {
+           
+            if (callback(this[j], this[j + 1], property)) {
+                let temporary = this[j];
+                this[j] = this[j + 1];
+                this[j + 1] = temporary;
             }
-            // way = new Node (number);
-        }    
-            
-        return root;
+        }
+    }
+
+    return this;
+}
+
+class Node {
+    constructor(number) {
+        this.number = number;
+        this.left = null;
+        this.right = null;
+    }
+
+    add(number, node) {
+        node = node || this;
+        if (this.number === undefined) {
+            this.number = number;
+            return;
+        }
+
+        if (number > node.number) {
+            if (node.right !== null) {
+                return this.add(number, node.right);
+            }
+
+            node.right = new Node(number);
+
+            return;
+        }
+
+        if (number < node.number) {
+            if (node.left !== null) {
+                return this.add(number, node.left);
+            }
+
+            node.left = new Node(number);
+            return;
+
+        }
+
+        if (number = node.number) {
+            throw new Error("number is duplicated");
+        }
+    }
+
+    search(number, node) {
+        node = node || this;
+
+        if (node.number === number) {
+            return node;
+        }
+
+        if (number > node.number) {
+
+            if (node.right === null) {
+                throw new Error("number is not found");
+            }
+
+            return this.search(number, node.right);
+        }
+
+        if (number < node.number) {
+
+            if (node.left === null) {
+                throw new Error("number is not found");
+            }
+            return this.search(number, node.left);
+        }
+    }
+
+    delete(number, carentNode, parentNode, minElement) {
+        if (typeof number !== 'number') {
+            throw new Error("Wrong arguments type");
+        }
+
+        carentNode = carentNode || this;
+        parentNode = parentNode || 0;
+
+        if (number > carentNode.number) {
+            if (carentNode.right === null) {
+                throw new Error("number is not found");
+            }
+            parentNode = carentNode;
+            carentNode = carentNode.right;
+            return this.delete(number, carentNode, parentNode);
+        }
+
+        if (number < carentNode.number) {
+            if (carentNode.left === null) {
+                throw new Error("number is not found");
+            }
+            parentNode = carentNode;
+            carentNode = carentNode.left;
+            return this.delete(number, carentNode, parentNode);
+        }
+
+        if (number === carentNode.number) {
+            carentNode = carentNode || carentNode;
+
+            if ((carentNode.left === null) && (carentNode.right === null)) {
+
+                if (carentNode === this) {
+                    root = new Node;
+                    return;
+                }
+
+                if (carentNode.number < parentNode.number) {
+                    parentNode.left = null;
+                }
+
+                if (carentNode.number > parentNode.number) {
+                    parentNode.right = null;
+                }
+
+                return;
+            }
+
+            if ((carentNode.left === null) && (carentNode.right !== null)) {
+
+                if (carentNode === this) {
+                    this.number = this.right.number;
+                    this.left = this.right.left;
+                    this.right = this.right.right;
+                    return;
+                }
+
+                if (carentNode.number < parentNode.number) {
+                    parentNode.left = carentNode.right;
+                }
+
+                if (carentNode.number > parentNode.number) {
+                    parentNode.right = carentNode.right;
+                }
+
+                return;
+            }
+
+            if ((carentNode.left !== null) && (carentNode.right === null)) {
+
+                if (carentNode === this) {
+                    this.number = this.left.number;
+                    this.left = this.left.left;
+                    this.right = this.left.right;
+                    return;
+                }
+
+                if (carentNode.number < parentNode.number) {
+                    parentNode.left = carentNode.left;
+                }
+
+                if (carentNode.number > parentNode.number) {
+                    parentNode.right = carentNode.left;
+                }
+
+                return;
+            }
+
+            if ((carentNode.left !== null) && (carentNode.right !== null)) {                
+                minElement = minElement || carentNode;
+
+                if (minElement === carentNode) {
+                    parentNode = minElement;
+                    minElement = minElement.right;
+                }
+
+                if (minElement.left !== null) {
+                    parentNode = minElement;
+                    minElement = minElement.left;
+
+                    return this.delete(number, carentNode, parentNode, minElement)
+                }
+
+                if (minElement.left === null) {
+                    carentNode.number = minElement.number;
+
+                    if (parentNode !== carentNode) {
+                        parentNode.left = minElement.right;
+                    } else {
+                        carentNode.right = minElement.right;
+                    }
+
+                    return;
+                }
+            }
+        }
     }
 }
 
-
-
-let bynaryTree = bynaryCash();
+ let binaryTree = new Node();
