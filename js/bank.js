@@ -1,34 +1,144 @@
-// class Client {
-//     constructor(firstName, lastName, isActive, date, debit...rest){
-//         this.firstName = firstName;
-//         this.lastName = lastName;
-//         this.isActive = isActive;
-//         this.date = date;
-//         this.debit = debit;
-//         countCreditAccount;
-//         countDebetAccount;
-//     }
-// }
-//     class CreditAccount {
-//         constructor(sum, limit) {
-//             this.sum = sum;
-//             this.limit = limit;
-//         }
-// }
+class CreditAccount {
+    constructor(ownMoney, creditMoney, limit, currency, isActive, dateActive) {
+        this.creditMoney = creditMoney;
+        this.ownMoney = ownMoney;
+        this.limit = limit;
+        this.currency = currency;
+        this.isActive = isActive;
+        this.dateActive = dateActive;
+    }
+}
 
-    
-//         addCreditAccount(sum, limit) {
-//             if((sumCredit + sum) > limCredit) {
-//                 this.credit.sumCredit = 
-//             }
-//         }
-    
-// }
+class DebitAccount {
+constructor(sum, currency, isActive, dateActive) {
+    this.currency = currency;
+    this.ownMoney = sum;
+    this.isActive = isActive;
+    this.dateActive = dateActive;
+    }
+}
 
-// class Credit{
-//     constructor(sumMoney, sumCredit, limCredit) {
-//         this.sumMoney;
-//         this.sumCredit;
-//         this.limCredit;
-//     }
-// }
+class Client {
+    constructor(firstName, lastName, isActive, date){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isActive = isActive;
+        this.date = date;
+        this.debit = [];
+        this.credit = [];
+    }
+    
+        addAccount(account) {
+            if(account.hasOwnProperty('limit')) {
+                if(account.sum < 0 ) {
+                    throw new Error("exceeded credit limit");
+                }
+                let creditMoney;
+                let ownMoney;
+                ownMoney = account.sum - account.limit;
+                if(ownMoney >= 0) {
+                    creditMoney = account.limit;
+                } else {
+                   
+                    creditMoney = account.limit + ownMoney;
+                }
+                this.credit.push(new CreditAccount(ownMoney, creditMoney, account.limit, account.currency, account.isActive, account.dateActive))
+            }
+            else {
+                if (account.sum < 0) {
+                    throw new Error("debit account must be greater than zero");
+                }
+                this.debit.push(new DebitAccount(account.sum, account.currency, account.isActive, account.dateActive))}
+        }
+    
+}
+
+let bank = [];
+function createNewClient(firstName, lastName, isActive, date, ...rest) {
+    let newClient = new Client(firstName, lastName, isActive, date);
+    let clientArgs = arguments;
+    for(let i = 4; i < clientArgs.length; i++) {
+        newClient.addAccount(clientArgs[i])
+    }
+    bank.push(newClient)
+}
+
+let acc1 = {sum : 120, currency: 'UAH', isActive: true, dateActive: '11.03.2012'};
+let acc2 = {sum : 240, limit: 100, currency: 'UAH', isActive: true, dateActive: '11.03.2012'};
+let acc3 = {sum : 120, currency: 'UAH', isActive: true, dateActive: '11.03.2012'};
+let acc4 = {sum : 15, limit: 120, currency: 'UAH', isActive: true, dateActive: '11.03.2012'};
+
+createNewClient('vasys', 'pupkin', true, '10.5.2001', acc1, acc2, acc3, acc4);
+
+function rate(sum, currencyAccount, currencyRate ) {
+    if((sum > 0) && (currencyAccount === 'USD')){
+        return sum
+    }
+    if((sum > 0) && (currencyAccount === 'UAH')){
+        return sum / currencyRate[0].sale;
+    }
+    if(sum > 0) {
+        let uah = 0;
+        for(i = 0; i < currencyRate.length; i++){
+            if(currencyAccount === i.ccy) {
+                uah = sum * i.buy;
+            }
+        }
+        return uah / currencyRate[0].sale;
+    }
+    return 0;
+}
+let  debtActiveDollar = 0; 
+let sumBankDollar = 0; 
+let  debtNotActiveDollar = 0;
+async function currency(bank, callback) {
+    let currenRequest = (await fetch('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')).json();
+    currenRequest.then((requestResult) => {
+        
+        for(let i = 0; i < bank.length; i++){
+
+            for(let j = 0; j < bank[i].credit.length; j++) {
+                
+                sumBankDollar += callback(bank[i].credit[j].ownMoney, bank[i].credit[j].currency, requestResult);
+                sumBankDollar += callback(bank[i].credit[j].creditMoney, bank[i].credit[j].currency, requestResult);
+            }
+
+            for(let k = 0; k < bank[i].debit.length; k++) {
+                sumBankDollar += callback(bank[i].debit[k].ownMoney, bank[i].debit[k].currency, requestResult);
+            }
+        }
+        console.log(sumBankDollar)
+    })
+    currenRequest.then((requestResult) => {
+        // let  debtActiveDollar = 0;
+        for(let i = 0; i < bank.length; i++) {
+            if(bank[i].isActive) {
+                for(let j = 0; j < bank[i].credit.length; j++) {
+                    if(bank[i].credit[j].ownMoney < 0) {
+                        debtActiveDollar += callback(Math.abs(bank[i].credit[j].ownMoney), bank[i].credit[j].currency, requestResult);
+                    }
+
+                }
+            }
+        }
+        console.log( debtActiveDollar);
+        return debtActiveDollar
+    })
+    currenRequest.then((requestResult) => {
+        // let  debtActiveDollar = 0;
+        for(let i = 0; i < bank.length; i++) {
+            if(!bank[i].isActive) {
+                for(let j = 0; j < bank[i].credit.length; j++) {
+                    if(bank[i].credit[j].ownMoney < 0) {
+                        debtNotActiveDollar += callback(Math.abs(bank[i].credit[j].ownMoney), bank[i].credit[j].currency, requestResult);
+                    }
+
+                }
+            }
+        }
+        console.log( debtNotActiveDollar);
+       
+    })
+}
+
+currency(bank, rate);
