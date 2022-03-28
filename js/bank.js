@@ -88,57 +88,71 @@ function rate(sum, currencyAccount, currencyRate ) {
     }
     return 0;
 }
+function calculatSumBankUsd(rate, callback){ 
+    
+    let  sumBankUsd = 0; 
+
+    for(let i = 0; i < bank.length; i++){
+
+        for(let j = 0; j < bank[i].credit.length; j++) {
+            
+            sumBankUsd += callback(bank[i].credit[j].ownMoney, bank[i].credit[j].currency, rate);
+            sumBankUsd += callback(bank[i].credit[j].creditMoney, bank[i].credit[j].currency, rate);
+        }
+
+        for(let k = 0; k < bank[i].debit.length; k++) {
+            sumBankUsd += callback(bank[i].debit[k].ownMoney, bank[i].debit[k].currency, rate);
+        }
+    }
+    console.log(sumBankUsd)
+}
+
+function calculatDebtActiveUsd(rate, callback) {
+     let  debtActiveUsd = 0;
+    for(let i = 0; i < bank.length; i++) {
+        if(bank[i].isActive) {
+            for(let j = 0; j < bank[i].credit.length; j++) {
+                if(bank[i].credit[j].ownMoney < 0) {
+                    debtActiveUsd += callback(Math.abs(bank[i].credit[j].ownMoney), bank[i].credit[j].currency, rate);
+                }
+
+            }
+        }
+    }
+    console.log( debtActiveUsd);
+    
+}
+
+function calculatDebtNotActiveUsd(rate, callback) {
+        
+    let  debtNotActiveUsd = 0;
+    for(let i = 0; i < bank.length; i++) {
+        if(!bank[i].isActive) {
+            for(let j = 0; j < bank[i].credit.length; j++) {
+                if(bank[i].credit[j].ownMoney < 0) {
+                    debtNotActiveUsd += callback(Math.abs(bank[i].credit[j].ownMoney), bank[i].credit[j].currency, rate);
+                }
+
+            }
+        }
+    }
+    console.log(debtNotActiveUsd);
+   
+}
+
+
+
+
 let  debtActiveDollar = 0; 
 let sumBankDollar = 0; 
 let  debtNotActiveDollar = 0;
 async function currency(bank, callback) {
+    let a = callback;
     let currenRequest = (await fetch('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')).json();
-    currenRequest.then((requestResult) => {
-        
-        for(let i = 0; i < bank.length; i++){
 
-            for(let j = 0; j < bank[i].credit.length; j++) {
-                
-                sumBankDollar += callback(bank[i].credit[j].ownMoney, bank[i].credit[j].currency, requestResult);
-                sumBankDollar += callback(bank[i].credit[j].creditMoney, bank[i].credit[j].currency, requestResult);
-            }
-
-            for(let k = 0; k < bank[i].debit.length; k++) {
-                sumBankDollar += callback(bank[i].debit[k].ownMoney, bank[i].debit[k].currency, requestResult);
-            }
-        }
-        console.log(sumBankDollar)
-    })
-    currenRequest.then((requestResult) => {
-        // let  debtActiveDollar = 0;
-        for(let i = 0; i < bank.length; i++) {
-            if(bank[i].isActive) {
-                for(let j = 0; j < bank[i].credit.length; j++) {
-                    if(bank[i].credit[j].ownMoney < 0) {
-                        debtActiveDollar += callback(Math.abs(bank[i].credit[j].ownMoney), bank[i].credit[j].currency, requestResult);
-                    }
-
-                }
-            }
-        }
-        console.log( debtActiveDollar);
-        return debtActiveDollar
-    })
-    currenRequest.then((requestResult) => {
-        // let  debtActiveDollar = 0;
-        for(let i = 0; i < bank.length; i++) {
-            if(!bank[i].isActive) {
-                for(let j = 0; j < bank[i].credit.length; j++) {
-                    if(bank[i].credit[j].ownMoney < 0) {
-                        debtNotActiveDollar += callback(Math.abs(bank[i].credit[j].ownMoney), bank[i].credit[j].currency, requestResult);
-                    }
-
-                }
-            }
-        }
-        console.log( debtNotActiveDollar);
-       
-    })
+    currenRequest.then(requestResult => calculatSumBankUsd(requestResult, callback))
+    currenRequest.then((requestResult) => calculatDebtActiveUsd(requestResult, callback))
+    currenRequest.then((requestResult) => calculatDebtNotActiveUsd(requestResult, callback))
 }
 
 currency(bank, rate);
