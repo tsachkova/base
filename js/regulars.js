@@ -1,7 +1,7 @@
 
 let phoneRegular = /^\+\d{2}\(\d{3}\)\d{3}\-\d\d\-\d\d$/;
 
-let emailRegular = /^[a-z][a-z0-9'_+-]{1,32}@[a-z0-9.]{1,29}\.[a-z]{2,3}$/;
+let emailRegular = /^[a-z][a-z0-9'_+-\.]{1,32}@[a-z0-9.]{1,29}\.[a-z]{2,3}$/;
 
 let websiteRegular = /^http:\/\/([a-z0-9](([a-zA-Z-_0-9](?!\.))|[a-z0-9]){1,29}\.)+[a-z]{2,4}$/;
 
